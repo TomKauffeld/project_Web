@@ -5,7 +5,7 @@ require_once __DIR__."/../../3rdPartie/RSA/RSA.php";
 
 class UserManagement{
 
-    public static function getPrivateKey( ){
+    private static function getPrivateKey( ){
         require_once __DIR__."/../../3rdPartie/RSA/private.php";
         return openssl_pkey_get_private( $privateKey, "1234");
     }
@@ -29,20 +29,50 @@ class UserManagement{
         return UserDataBase::getFromId( $id);
     }
 
-    public static function loginWithPassword( string $username, string $password){
-        
+    public static function loginWithPassword( string $username, string $password){     
         $query = "SELECT password, id FROM blog_user WHERE username=:username";
         SQLConnection::executeQuery( $query, array( ":username" => array( $username, PDO::PARAM_STR)));
         $result = SQLConnection::getResults();
         if (isset( $result[0]["password"])){
             if (password_verify( $password, $result[0]["password"])){
                 $token = UserManagement::createToken( $result[0]["id"]);
-                return array( "status" => "OK", "loggedIn" => true, "token" => $token);
+                $user = UserManagement::getUserFromId( $result[0]["id"]);
+                return array( "status" => "OK", "loggedIn" => true, "token" => $token, "user" => $user);
             }else{
                 return array( "status" => "OK", "loggedIn" => false);
             }
         }else{
             return array( "status" => "OK", "loggedIn" => false);
+        }
+    }
+
+    public static function createUser( string $username, string $password){
+        if (strlen( $username) < 3){
+            return array( "status" => "ERROR", "error" => "THE USERNAME MUST BE AT LEAST 3 CHARACTERS LONG");
+        }elseif (strlen( $password) < 6) {
+            return array( "status" => "ERROR", "error" => "THE PASSWORD MUST BE AT LEAST 6 CHARACTERS LONG");
+        }elseif( UserDataBase::usernameExists( $username)){
+            return array( "status" => "ERROR", "error" => "THE USERNAME IS ALREADY TAKEN");
+        }elseif (strcmp( $username, $password) == 0){
+            return array( "status" => "ERROR", "error" => "THE PASSWORD MUST BE DIFFERENT THAN THE USERNAME");
+        }
+        $id = "";
+        do {
+            $id = bin2hex( random_bytes( 64));
+        } while (UserDataBase::idExists( $id));
+        $query = "INSERT INTO blog_user VALUES( :id, :username, 0, :password, :time)";
+        $val = SQLConnection::executeQuery( $query, array(
+            ":id" => array( $id, PDO::PARAM_STR),
+            ":username" => array( $username, PDO::PARAM_STR),
+            ":password" => array( password_hash( $password, 1), PDO::PARAM_STR),
+            ":time" => array( time(), PDO::PARAM_INT)
+        ));
+        if ($val){
+            $user = UserManagement::getUserFromId( $id);
+            $token = UserManagement::createToken( $id);
+            return array( "status" => "OK", "token" => $token, "user" => $user);
+        }else{
+            return array( "status" => "ERROR", "error" => "SQL ERROR");
         }
     }
 
@@ -62,6 +92,28 @@ class UserDataBase{
             return new User( $result[0]["id"], $result[0]["username"], $result[0]["adminLvL"]);
         }else{
             return null;
+        }
+    }
+
+    public static function idExists( string $id){
+        $query = "SELECT count(*) FROM blog_user WHERE id=:id";
+        SQLConnection::executeQuery( $query, array( ":id" => array( $id, PDO::PARAM_INT)));
+        $result = SQLConnection::getResults();
+        if ($result[0][0] > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public static function usernameExists( string $username){
+        $query = "SELECT count(*) FROM blog_user WHERE username=:username";
+        SQLConnection::executeQuery( $query, array( ":username" => array( $username, PDO::PARAM_INT)));
+        $result = SQLConnection::getResults();
+        if ($result[0][0] > 0){
+            return true;
+        }else{
+            return false;
         }
     }
 
