@@ -33,7 +33,8 @@ switch ($method){
         }
         break;
     case "GET":
-        $url_arr = explode( "/", $_SERVER["REQUEST_URI"]);
+        $all = explode( "?", $_SERVER["REQUEST_URI"]);
+        $url_arr = explode( "/", $all[0]);
         $lenght = count( $url_arr);
         $i = array_search( "api", $url_arr);
         if ($i+3 == $lenght || $i+4 == $lenght || $i+5 == $lenght){
@@ -47,7 +48,17 @@ switch ($method){
                         echo json_encode( array( "status" => "ERROR", "error" => "THE COMMENT DOESN'T EXIST", "version" => "v1"));
                     }
                 }else{
-                    echo json_encode( CommentManagement::getAll());
+                    $limit = isset( $_GET["limit"]) ? $_GET["limit"] : -1;
+                    $offset = isset( $_GET["offset"]) ? $_GET["offset"] : -1;
+                    if ($limit > 0){
+                        if ($offset >= 0){
+                            echo json_encode( CommentManagement::getAll( $limit, $offset));
+                        }else{
+                            echo json_encode( CommentManagement::getAll( $limit));
+                        }
+                    }else{
+                        echo json_encode( CommentManagement::getAll( ));
+                    }   
                 }
             }else{
                 include __DIR__."/ErrorRequest.php";

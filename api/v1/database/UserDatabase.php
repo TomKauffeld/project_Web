@@ -63,6 +63,18 @@ class UserDataBase{
         }
     }
 
+    public static function changeAdminLvL( string $id, int $adminLvL){
+        if ($adminLvL >= 0 && $adminLvL <= 2 &&UserDataBase::idExists( $id)){
+            $query = "UPDATE blog_user SET adminLvL=:adminLvL WHERE id=:id";
+            return SQLConnection::executeQuery( $query, array(
+                ":adminLvL" => array( $adminLvL, PDO::PARAM_INT),
+                ":id" => array( $id, PDO::PARAM_STR)
+            ));
+        }else{
+            return false;
+        }
+    }
+
     /**
      * Gets an user from the database based on the id
      * @param string $id the id of the user to search
@@ -115,9 +127,23 @@ class UserDataBase{
      * returns the ids of all the users inside of the database
      * @return array list of all the users
      */
-    public static function getAll( ){
-        $query = "SELECT id FROM blog_user";
-        SQLConnection::executeQuery( $query);
+    public static function getAll( int $limit = -1, int $offset = -1){
+        if ($limit > 0){
+            if ($offset >= 0){
+                $query = "SELECT id FROM blog_user ORDER BY -time LIMIT :limit OFFSET :offset";
+                SQLConnection::executeQuery( $query, array(
+                    ":limit" => array( $limit, PDO::PARAM_INT),
+                    ":offset" => array( $offset, PDO::PARAM_INT)
+                ));
+            }else{
+                $query = "SELECT id FROM blog_user ORDER BY -time LIMIT :limit";
+                SQLConnection::executeQuery( $query, array( ":limit" => array( $limit, PDO::PARAM_INT)));
+            }
+        }else{
+            $query = "SELECT id FROM blog_user ORDER BY -time";
+            SQLConnection::executeQuery( $query);
+        }
+
         $result = SQLConnection::getResults();
         $ids = array();
         foreach ($result as $line) {

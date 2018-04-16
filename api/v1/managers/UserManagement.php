@@ -18,8 +18,8 @@ class UserManagement{
     /**
      * @return array list of the ids of the users
      */
-    public static function getAll( ){
-        $ids = UserDataBase::getAll();
+    public static function getAll( int $limit = -1, int $offset = -1){
+        $ids = UserDataBase::getAll( $limit, $offset);
         return array( "status" => "OK", "lenght" => count( $ids), "users" => $ids, "version" => "v1");
     }
 
@@ -84,6 +84,23 @@ class UserManagement{
         }else{
             http_response_code( 500);
             return array( "status" => "ERROR", "error" => "SQL ERROR", "version" => "v1");
+        }
+    }
+
+    public static function changeAdminLvL( string $token, string $id, int $adminLvL){
+        $user = TokenManagement::checkTokenString( $token);
+        if ($user != null){
+            if ($user["adminLvL"] >= 2){
+                if (UserDataBase::changeAdminLvL( $id, $adminLvL)){
+                    return array( "status" => "OK", "version" => "v1");
+                }else{
+                    return array( "status" => "ERROR", "error" => "PARAMS NOT VALID", "version" => "v1");
+                }
+            }else{
+                return array( "status" => "ERROR", "error" => "FORBIDDEN", "version" => "v1");
+            }
+        }else{
+            return array( "status" => "ERROR", "error" => "INVALID TOKEN", "version" => "v1");
         }
     }
 
