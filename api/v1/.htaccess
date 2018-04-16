@@ -1,4 +1,5 @@
 ErrorDocument 404 /school/blog/api/v1/actions/ErrorRequest.php
+ErrorDocument 500 /school/blog/api/v1/actions/ErrorServer.php
 
 RewriteRule ^users/ actions/Users.php? [NC,L]
 RewriteRule ^users actions/Users.php? [NC,L]

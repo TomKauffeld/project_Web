@@ -5,6 +5,10 @@ require_once __DIR__."/../objects/User.php";
 
 class UserDataBase{
 
+    /**
+     * generates an id that's not yet used in the database
+     * @return string a new id
+     */
     private static function generateId( ){
         $id = "";
         do {
@@ -13,7 +17,16 @@ class UserDataBase{
         return $id;
     }
 
+    /**
+     * Creates a new User inside the database
+     * @param string $username
+     * @param string $password
+     * @return User|NULL returns the user if it was created, null otherwise
+     */
     public static function createNew( string $username, string $password){
+        if (UserDataBase::usernameExists( $username)){
+            return null;
+        }
         $id = UserDataBase::generateId();
         $query = "INSERT INTO blog_user VALUES( :id, :username, 0, :password, :time)";
         $val = SQLConnection::executeQuery( $query, array(
@@ -29,6 +42,12 @@ class UserDataBase{
         }
     }
 
+    /**
+     * Checks the username/password combination
+     * @param string $username the username of the user
+     * @param string $password the password of the user
+     * @return User|NULL returns the user if the combination is accepted, null otherwise
+     */
     public static function loginWithPassword( string $username, string $password){     
         $query = "SELECT password, id FROM blog_user WHERE username=:username";
         SQLConnection::executeQuery( $query, array( ":username" => array( $username, PDO::PARAM_STR)));
@@ -61,6 +80,7 @@ class UserDataBase{
     }
 
     /**
+     * searches the database if the id exists
      * @param string $id the id to search for
      * @return boolean true if the id exists, false if it doesn't exist
      */
@@ -76,6 +96,7 @@ class UserDataBase{
     }
 
     /**
+     * searches the database if the username exists
      * @param string $username the username to search for
      * @return boolean true if the username exists, false if it doesn't exist
      */
@@ -91,6 +112,7 @@ class UserDataBase{
     }
 
     /**
+     * returns the ids of all the users inside of the database
      * @return array list of all the users
      */
     public static function getAll( ){

@@ -3,8 +3,14 @@
 require_once __DIR__."/CommentManagement.php";
 require_once __DIR__."/../database/PostDatabase.php";
 require_once __DIR__."/../objects/Post.php";
+require_once __DIR__."/TokenManagement.php";
+require_once __DIR__."/../objects/User.php";
 
 class PostManagement{
+
+    public static function idExists( string $id){
+        PostDatabase::idExists( $id);
+    }
 
     public static function getAll( ){
         $ids = PostDatabase::getAll();
@@ -30,7 +36,16 @@ class PostManagement{
     }
 
     public static function createNew( string $token, string $title, string $body){
-        
+        $user = TokenManagement::checkTokenString( $token);
+        if ($user != null){
+            if ($user["adminLvL"] >= 1){
+                $post = PostDatabase::createNew( $user["id"], $title, $body);
+                return array( "status" => "OK", "id" => $post->getId(), "version" => "v1");
+            }else{
+                return array( "status" => "ERROR", "error" => "NOT PERMITTED", "version" => "v1");
+            }
+        }else{
+            return array( "status" => "ERROR", "error" => "INVALID TOKEN", "version" => "v1");            
+        }
     }
-
 }

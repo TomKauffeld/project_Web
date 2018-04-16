@@ -3,7 +3,7 @@ require_once __DIR__."/../database/UserDatabase.php";
 require_once __DIR__."/../objects/User.php";
 require_once __DIR__."/PostManagement.php";
 require_once __DIR__."/CommentManagement.php";
-require_once __DIR__."/../../3rdParty/RSA/RSA.php";
+require_once __DIR__."/TokenManagement.php";
 
 class UserManagement{
 
@@ -32,16 +32,6 @@ class UserManagement{
     }
 
     /**
-     * @param string $id the id of the user
-     * @return array the token
-     */
-    private static function createToken( string $id){
-        $base = array( "a" => $id, "b" => time(), "c" => bin2hex( random_bytes( 64)));
-        $hash = RSA::encrypt( json_encode( $base));
-        return array( "a" => $base["a"], "b" => $base["b"], "c" => $base["c"], "d" => $hash);
-    }
-
-    /**
      * Gets an user from the database based on the id
      * @param string $id the id of the user to search
      * @return User|NULL when the user is found, else NULL
@@ -56,6 +46,7 @@ class UserManagement{
     }
 
     /**
+     * 
      * @param string $username the username
      * @param string $password the password
      * @return array the response
@@ -63,7 +54,7 @@ class UserManagement{
     public static function loginWithPassword( string $username, string $password){     
         $user = UserDataBase::loginWithPassword( $username, $password);
         if ($user != null){
-            $token = UserManagement::createToken( $user->getId());
+            $token = TokenManagement::createToken( $user->getId());
             return array( "status" => "OK", "loggedIn" => true, "token" => $token, "user" => $user, "version" => "v1");
         }else{
             return array( "status" => "OK", "loggedIn" => false, "version" => "v1");
@@ -71,11 +62,12 @@ class UserManagement{
     }
 
     /**
+     * creates a new user
      * @param string $username the username
      * @param string $password the password
      * @return array the response
      */
-    public static function createUser( string $username, string $password){
+    public static function createNew( string $username, string $password){
         if (strlen( $username) < 3){
             return array( "status" => "ERROR", "error" => "THE USERNAME MUST BE AT LEAST 3 CHARACTERS LONG", "version" => "v1");
         }elseif (strlen( $password) < 6) {
@@ -87,7 +79,7 @@ class UserManagement{
         }
         $user = UserDataBase::createNew( $username, $password);
         if ($user != null){
-            $token = UserManagement::createToken( $user->getId());
+            $token = TokenManagement::createToken( $user->getId());
             return array( "status" => "OK", "token" => $token, "user" => $user, "version" => "v1");
         }else{
             http_response_code( 500);
@@ -96,8 +88,9 @@ class UserManagement{
     }
 
     /**
-     * @param string id
-     * @return boolean
+     * checks if the id is already in use
+     * @param string $id the id to search for
+     * @return boolean true if the id exists, false otherwise
      */
     public static function idExists( string $id){
         return UserDataBase::idExists( $id);
