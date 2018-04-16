@@ -1,0 +1,25 @@
+ErrorDocument 404 /school/blog/api/v1/actions/ErrorRequest.php
+
+RewriteRule ^users/ actions/Users.php? [NC,L]
+RewriteRule ^users actions/Users.php? [NC,L]
+RewriteRule ^user/ actions/Users.php? [NC,L]
+RewriteRule ^user actions/Users.php? [NC,L]
+RewriteRule ^user/(.*)$ actions/Users.php?id=$1 [NC,L]
+RewriteRule ^users/(.*)$ actions/Users.php?id=$1 [NC,L]
+
+RewriteRule ^comments/ actions/Comments.php? [NC,L]
+RewriteRule ^comments actions/Comments.php? [NC,L]
+RewriteRule ^comment/ actions/Comments.php? [NC,L]
+RewriteRule ^comment actions/Comments.php? [NC,L]
+RewriteRule ^comment/(.*)$ actions/Comments.php?id=$1 [NC,L]
+RewriteRule ^comments/(.*)$ actions/Comments.php?id=$1 [NC,L]
+
+RewriteRule ^posts/ actions/Posts.php? [NC,L]
+RewriteRule ^posts actions/Posts.php? [NC,L]
+RewriteRule ^post/ actions/Posts.php? [NC,L]
+RewriteRule ^post actions/Posts.php? [NC,L]
+RewriteRule ^post/(.*)$ actions/Posts.php?id=$1 [NC,L]
+RewriteRule ^posts/(.*)$ actions/Posts.php?id=$1 [NC,L]
+
+Options +FollowSymLinks
+RewriteEngine On

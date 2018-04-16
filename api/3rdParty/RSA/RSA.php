@@ -1,5 +1,23 @@
 <?php
 class RSA{
+    /**
+     * @return resource Returns a positive key resource identifier on success, or FALSE on error.
+     */
+  private static function getPrivateKey( ){
+    $privateKey =
+    "-----BEGIN RSA PRIVATE KEY-----
+    
+    -----END RSA PRIVATE KEY-----";
+      return openssl_pkey_get_private( $privateKey, "");
+  }
+  
+  /**
+   * @return resource Returns a positive key resource identifier on success, or FALSE on error.
+   */
+  public static function getPublicKey( ){
+      return openssl_pkey_get_public( "file:public.pem");
+  }
+
 // given the variables as constants:
 
   //Block size for encryption block cipher
@@ -9,8 +27,11 @@ class RSA{
   private $DECRYPT_BLOCK_SIZE = 256;// this again for 2048 bit key
 
          //For encryption we would use:
-  function encrypt($plainData, $privatePEMKey)
+  function encrypt($plainData, $privatePEMKey = null)
   {
+    if ($privatePEMKey == null){
+      $privatePEMKey = RSA::getPrivateKey();
+    }
     $encrypted = '';
     $plainData = str_split($plainData, $this->ENCRYPT_BLOCK_SIZE);
     foreach($plainData as $chunk)
@@ -27,8 +48,11 @@ class RSA{
   }
 
          //For decryption we would use:
-  protected function decrypt($publicPEMKey, $data)
+  protected function decrypt($data, $publicPEMKey = null)
   {
+    if ($publicPEMKey == null){
+      $publicPEMKey = RSA::getPrivateKey();
+    }
     $decrypted = '';
 
     //decode must be done before spliting for getting the binary String
