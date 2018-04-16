@@ -14,5 +14,5 @@ le site : https://pubflare.ovh/school/blog/<br>
 <br>
 <b> notice :</b><br>
 Certaines fichiers ne sont pas complet en raison de securité :<br>
-api/3rdPartie/RSA/private.php ne contient pas la clef rsa<br>
+api/3rdParty/RSA/RSA.php ne contient pas la clef RSA privée, ni le mot de passe du "fichier"<br>
 api/sql/SQLConnection.php ne contient pas les données de connection à la base de données<br>
