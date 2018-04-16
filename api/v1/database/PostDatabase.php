@@ -44,9 +44,23 @@ class PostDatabase{
         }
     }
 
-    public static function getAll( ){
-        $query = "SELECT id FROM blog_post";
-        SQLConnection::executeQuery( $query);
+    public static function getAll( int $limit = -1, int $offset = -1){
+        if ($limit > 0){
+            if ($offset >= 0){
+                $query = "SELECT id FROM blog_post ORDER BY -time LIMIT :limit OFFSET :offset";
+                SQLConnection::executeQuery( $query, array(
+                    ":limit" => array( $limit, PDO::PARAM_INT),
+                    ":offset" => array( $offset, PDO::PARAM_INT)
+                ));
+            }else{
+                $query = "SELECT id FROM blog_post ORDER BY -time LIMIT :limit";
+                SQLConnection::executeQuery( $query, array( ":limit" => array( $limit, PDO::PARAM_INT)));
+            }
+        }else{
+            $query = "SELECT id FROM blog_post ORDER BY -time";
+            SQLConnection::executeQuery( $query);
+        }
+
         $result = SQLConnection::getResults();
         $ids = array();
         foreach ($result as $line) {

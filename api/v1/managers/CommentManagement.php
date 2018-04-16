@@ -11,8 +11,8 @@ class CommentManagement{
         return CommentDatabase::idExists( $id);
     }
     
-    public static function getAll( ){
-        $ids = CommentDatabase::getAll();
+    public static function getAll( int $limit = -1, int $offset = -1){
+        $ids = CommentDatabase::getAll( $limit, $offset);
         return array( "status" => "OK", "lenght" => count( $ids), "comments" => $ids, "version" => "v1");
     }
 

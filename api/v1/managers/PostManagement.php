@@ -12,8 +12,8 @@ class PostManagement{
         return PostDatabase::idExists( $id);
     }
 
-    public static function getAll( ){
-        $ids = PostDatabase::getAll();
+    public static function getAll( int $limit = -1, int $offset = -1){
+        $ids = PostDatabase::getAll( $limit, $offset);
         return array( "status" => "OK", "lenght" => count( $ids), "posts" => $ids, "version" => "v1");
     }
 

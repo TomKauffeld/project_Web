@@ -25,7 +25,7 @@ class CommentDatabase{
      * @return boolean true if the id exists, false if it doesn't exist
      */
     public static function idExists( string $id){
-        $query = "SELECT count(*) FROM blog_post WHERE id=:id";
+        $query = "SELECT count(*) FROM blog_comment WHERE id=:id";
         SQLConnection::executeQuery( $query, array( ":id" => array( $id, PDO::PARAM_INT)));
         $result = SQLConnection::getResults();
         if ($result[0][0] > 0){
@@ -39,9 +39,23 @@ class CommentDatabase{
      * returns the ids of all the comments inside of the database
      * @return array list of all the comments
      */
-    public static function getAll( ){
-        $query = "SELECT id FROM blog_comment";
-        SQLConnection::executeQuery( $query);
+    public static function getAll( int $limit = -1, int $offset = -1){
+        if ($limit > 0){
+            if ($offset >= 0){
+                $query = "SELECT id FROM blog_comment ORDER BY -time LIMIT :limit OFFSET :offset";
+                SQLConnection::executeQuery( $query, array(
+                    ":limit" => array( $limit, PDO::PARAM_INT),
+                    ":offset" => array( $offset, PDO::PARAM_INT)
+                ));
+            }else{
+                $query = "SELECT id FROM blog_comment ORDER BY -time LIMIT :limit";
+                SQLConnection::executeQuery( $query, array( ":limit" => array( $limit, PDO::PARAM_INT)));
+            }
+        }else{
+            $query = "SELECT id FROM blog_comment ORDER BY -time";
+            SQLConnection::executeQuery( $query);
+        }
+
         $result = SQLConnection::getResults();
         $ids = array();
         foreach ($result as $line) {
@@ -56,7 +70,7 @@ class CommentDatabase{
      * @return array list of all the comments made by a user
      */
     public static function getAllFromUser( string $id){
-        $query = "SELECT id FROM blog_comment WHERE author=:id";
+        $query = "SELECT id FROM blog_comment WHERE author=:id ORDER BY -time";
         SQLConnection::executeQuery( $query, array( ":id" => array( $id, PDO::PARAM_STR)));
         $result = SQLConnection::getResults();
         $ids = array();
@@ -72,7 +86,7 @@ class CommentDatabase{
      * @return array list of all the comments on a post
      */
     public static function getAllFromPost( string $id){
-        $query = "SELECT id FROM blog_comment WHERE post=:id";
+        $query = "SELECT id FROM blog_comment WHERE post=:id ORDER BY -time";
         SQLConnection::executeQuery( $query, array( ":id" => array( $id, PDO::PARAM_STR)));
         $result = SQLConnection::getResults();
         $ids = array();
