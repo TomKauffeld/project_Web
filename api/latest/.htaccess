@@ -1,5 +1,9 @@
 ErrorDocument 404 /school/blog/api/v1/actions/ErrorRequest.php
 
+RewriteRule ^auth/ /school/blog/api/v1/auth/ [NC,L]
+RewriteRule ^auth /school/blog/api/v1/auth [NC,L]
+RewriteRule ^auth/(.*)$ /school/blog/api/v1/auth/$1 [NC,L]
+
 RewriteRule ^users/ /school/blog/api/v1/users/ [NC,L]
 RewriteRule ^users /school/blog/api/v1/users [NC,L]
 RewriteRule ^user/ /school/blog/api/v1/user/ [NC,L]

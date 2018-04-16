@@ -8,7 +8,7 @@ require_once __DIR__."/TokenManagement.php";
 class CommentManagement{
 
     public static function idExists( string $id){
-        CommentDatabase::idExists( $id);
+        return CommentDatabase::idExists( $id);
     }
     
     public static function getAll( ){
@@ -38,7 +38,7 @@ class CommentManagement{
     public static function createNew( string $token, string $post, string $body){
         $user = TokenManagement::checkTokenString( $token);
         if ($user != null){
-            $comment = CommentDatabase::createNew( $user["id"], $post, $body);
+            $comment = CommentDatabase::createNew( $token["id"], $post, $body);
             if ($comment == null){
                 return array( "status" => "ERROR", "error" => "INVALID POST", "version" => "v1");
             }else{

@@ -6,118 +6,26 @@
     <body>
         <h1 id="top">The API for the blog website</h1>
         current version : v1<br>
-        api link : <a href="https://pubflare.ovh/school/blog/api/latest/">https://pubflare.ovh/school/blog/api/latest</a><br>
+        api link : <a href="https://pubflare.ovh/school/blog/api/latest/">https://pubflare.ovh/school/blog/api/latest</a> for the latest version<br>
+        or instead of /api/latest you can select your version by going to /api/{api version} <br>
+        to know which version you are using, check the "version" tag inside the responses<br>
         All responses will be in json format<br>
-        <a href="#user">User</a><br>
-        &emsp;<a href="#getUser">Get an user</a><br>
-        &emsp;<a href="#createUser">Create an user</a><br>
-        &emsp;<a href="#login">Login</a>
+        actions :
         <ul>
-            <li>
-                <h2 id="user">User</h2>
-                a User is made up with an id, an username, and an adminLvL<br>
-                adminLvL :<br>
-                &emsp;0 : user (can post comments)<br>
-                &emsp;1 : administrator (can post posts)<br>
-                &emsp;2 : super admin (can control who gets which adminLvL)
-                <ul>
-                    <li>
-                        <h3 id="getUser">Get an user</h3>
-                        get an user via an GET request to /user/{id} with {id} being the id of the user<br>
-                        exemple : <br>
-                        request : <br>
-                        <i>GET https://pubflare.ovh/school/blog/api/latest/user/g5RpsA</i><br>
-                        response : <br>
-                        <i>
-                            {<br>
-                                &emsp;"status": "OK",<br>
-                                &emsp;"user":<br>
-                                &emsp;{<br>
-                                    &emsp;&emsp;"id": "g5RpsA",<br>
-                                    &emsp;&emsp;"username": "tom",<br>
-                                    &emsp;&emsp;"adminLvL": 1<br>
-                                &emsp;}<br>
-                            }
-                        </i>
-                    </li>
-                    <li>
-                        <h3 id="createUser">Create an user</h3>
-                        to create an user send a POST request over a secure https connection with inside the body the parametres <b>username</b> and <b>password</b> set<br>
-                        exemple : <br>
-                        request : <br>
-                        <i>
-                            POST https://pubflare.ovh/school/blog/api/latest/user<br>
-                            username="tom"&amp;password="123456789"<br>
-                        </i>
-                        response if succesfull : <br>
-                        <i>
-                            {<br>
-                                &emsp;"status": "OK",<br>
-                                &emsp;"user":<br>
-                                &emsp;{<br>
-                                    &emsp;&emsp;"id": "g5RpsA",<br>
-                                    &emsp;&emsp;"username": "tom",<br>
-                                    &emsp;&emsp;"adminLvL": 1<br>
-                                &emsp;},<br>
-                                &emsp;"token":<br>
-                                &emsp;{<br>
-                                    &emsp;&emsp;"a": "g5RpsA",<br>
-                                    &emsp;&emsp;"b": 1557766952654126,<br>
-                                    &emsp;&emsp;"c": "YIEUFLfebyfzfbskif"<br>
-                                    &emsp;&emsp;"d": "GEEOIGOZGDJliegodls"<br>
-                                &emsp;}<br>
-                            }<br>
-                        </i>
-                        response if not succesfull : <br>
-                        <i>
-                            {<br>
-                                &emsp;"status": "ERROR",<br>
-                                &emsp;"error": "THE USERNAME IS ALREADY TAKEN"<br>
-                            }
-                        </i>
-                    </li>
-                    <li>
-                        <h3 id="login">Login</h3>
-                        to login send a POST request over a secure https connection to <a href="https://pubflare.ovh/school/blog/api/latest/user/login">/user/login</a> with inside the body the parametres <b>username</b> and <b>password</b> set<br>
-                        exemple : <br>
-                        request : <br>
-                        <i>
-                            POST https://pubflare.ovh/school/blog/api/latest/user/login<br>
-                            username="tom"&amp;password="123456789"<br>
-                        </i>
-                        response if succesfull : <br>
-                        <i>
-                            {<br>
-                                &emsp;"status": "OK",<br>
-                                &emsp;"loggedIn": true,<br>
-                                &emsp;"user":<br>
-                                &emsp;{<br>
-                                    &emsp;&emsp;"id": "g5RpsA",<br>
-                                    &emsp;&emsp;"username": "tom",<br>
-                                    &emsp;&emsp;"adminLvL": 1<br>
-                                &emsp;},<br>
-                                &emsp;"token":<br>
-                                &emsp;{<br>
-                                    &emsp;&emsp;"a": "g5RpsA",<br>
-                                    &emsp;&emsp;"b": 1557766952654126,<br>
-                                    &emsp;&emsp;"c": "YIEUFLfebyfzfbskif"<br>
-                                    &emsp;&emsp;"d": "GEEOIGOZGDJliegodls"<br>
-                                &emsp;}<br>
-                            }<br>
-                        </i>
-                        response if not succesfull : <br>
-                        <i>
-                            {<br>
-                                &emsp;"status": "OK",<br>
-                                &emsp;"loggedIn": false<br>
-                            }
-                        </i>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <h2 id="post">Post</h2>
-            </li>
+            <li>GET /user : get all users</li>
+            <li>GET /user/{id} : get an user</li>
+            <li>GET /user/{id}/comments : get all comments made by the user</li>
+            <li>GET /user/{id}/posts : get all posts made by the user</li>
+            <li>GET /post : get all posts</li>
+            <li>GET /post/{id} : get a post</li>
+            <li>GET /post/{id}/comments : get the comments on the post</li>
+            <li>GET /comment : get all comments</li>
+            <li>GET /comment/{id} : get a comment</li>
+            <li>POST /user : create an user</li>
+            <li>POST /post : create a post</li>
+            <li>POST /comment : create a comment</li>
+            <li>POST /auth/validate : validate a token</li>
+            <li>POST /auth/login : login a user and get a token</li>
         </ul>
     </body>
 </html>

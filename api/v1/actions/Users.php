@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: application/json');
 require_once __DIR__."/../managers/UserManagement.php";
 $method = $_SERVER['REQUEST_METHOD'];
 switch ($method){

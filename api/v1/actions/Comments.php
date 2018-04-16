@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: application/json');
 require_once __DIR__."/../managers/CommentManagement.php";
 
 $method = $_SERVER['REQUEST_METHOD'];

@@ -9,7 +9,7 @@ require_once __DIR__."/../objects/User.php";
 class PostManagement{
 
     public static function idExists( string $id){
-        PostDatabase::idExists( $id);
+        return PostDatabase::idExists( $id);
     }
 
     public static function getAll( ){

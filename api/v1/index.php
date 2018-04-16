@@ -1,2 +1,3 @@
 <?php
-header( "Location: https://pubflare.ovh/school/blog/api");
+header('Content-Type: application/json');
+echo json_encode( array( "status" => "OK", "version" => "v1"));
