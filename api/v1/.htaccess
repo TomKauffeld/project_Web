@@ -1,5 +1,5 @@
-ErrorDocument 404 /api/v1/actions/ErrorRequest.php
-ErrorDocument 500 /api/v1/actions/ErrorServer.php
+ErrorDocument 404 /school/blog/api/v1/actions/ErrorRequest.php
+ErrorDocument 500 /school/blog/api/v1/actions/ErrorServer.php
 
 RewriteRule ^auth/ actions/Auth.php? [NC,L]
 RewriteRule ^auth actions/Auth.php? [NC,L]

@@ -6,8 +6,16 @@ require_once __DIR__."/../objects/User.php";
 
 class TokenManagement{
 
+    /**
+     * @var int $MAX_TIME the amount of seconds the token is valid (30 days)
+     */
     private static $MAX_TIME = 3600*24*30;
 
+    /**
+     * validates a token
+     * @param array $token the token
+     * @return User|NULL retures the user if the token is valid, null otherwise
+     */
     public static function checkTokenJson( array $token){
         if (isset( $token["id"]) && isset( $token["b"]) && isset( $token["c"]) && isset( $token["d"])){
             $decrypt = RSA::decrypt( $token["d"], RSA::getPublicKey());
@@ -26,11 +34,17 @@ class TokenManagement{
         }
     }
 
+    /**
+     * validates a token
+     * @param string $token the token
+     * @return User|NULL retures the user if the token is valid, null otherwise
+     */
     public static function checkTokenString( string $token){
         return TokenManagement::checkTokenJson( json_decode( $token, true));
     }
 
     /**
+     * creates a new token
      * @param string $id the id of the user
      * @return array the token
      */

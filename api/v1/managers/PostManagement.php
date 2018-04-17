@@ -40,12 +40,17 @@ class PostManagement{
         return CommentManagement::getAllFromPost( $id);
     }
 
-    public static function createNew( string $token, string $category, string $title, string $body){
+    public static function createNew( string $token, array $categories, string $title, string $body){
         $user = TokenManagement::checkTokenString( $token);
         if ($user != null){
             if ($user["adminLvL"] >= 1){
-                $post = PostDatabase::createNew( $user["id"], $category, $title, $body);
-                return array( "status" => "OK", "id" => $post->getId(), "version" => "v1");
+                $post = PostDatabase::createNew( $user["id"], $categories, $title, $body);
+                if ($post == null){
+                    return array( "status" => "ERROR", "error" => "CATEGORIES NOT CORRECT", "version" => "v1");
+                }else{
+                    return array( "status" => "OK", "id" => $post->getId(), "version" => "v1");
+                }
+
             }else{
                 return array( "status" => "ERROR", "error" => "NOT PERMITTED", "version" => "v1");
             }
