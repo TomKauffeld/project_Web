@@ -12,7 +12,7 @@ class UserDataBase{
     private static function generateId( ){
         $id = "";
         do {
-            $id = bin2hex( random_bytes( 64));
+            $id = bin2hex( random_bytes( 50));
         } while (UserDataBase::idExists( $id));
         return $id;
     }
@@ -28,7 +28,7 @@ class UserDataBase{
             return null;
         }
         $id = UserDataBase::generateId();
-        $query = "INSERT INTO blog_user VALUES( :id, :username, 0, :password, :time)";
+        $query = "INSERT INTO blog_user (id, username, adminLvL, password, time) VALUES( :id, :username, 0, :password, :time)";
         $val = SQLConnection::executeQuery( $query, array(
             ":id" => array( $id, PDO::PARAM_STR),
             ":username" => array( $username, PDO::PARAM_STR),

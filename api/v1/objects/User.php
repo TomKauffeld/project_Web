@@ -38,7 +38,7 @@ class User implements JsonSerializable{
      * @return int the level of permission : 0 user, 1 admin, 2 super-admin
      */
     public function getAdminLvL( ){
-        return $thus->adminLvL;
+        return $this->adminLvL;
     }
 
     /**

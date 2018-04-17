@@ -40,6 +40,14 @@
                 </ul>
             </li>
             <li>
+                <h2>category</h2>
+                <li>GET /category : get all categories</li>
+                <li>GET /category/{id} : get a category</li>
+                <li>GET /category/{id}/posts : get all posts with this category</li>
+                <li>POST /category : create a category</li>
+                <li>PATCH /category/{id} : update the name</li>
+            </li>
+            <li>
                 <h2>post</h2>
                 <ul>
                     <li>GET /post[?limit={limit}[&amp;offset={offset}]] : get all posts</li>

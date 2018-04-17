@@ -26,5 +26,12 @@ RewriteRule ^post actions/Posts.php? [NC,L]
 RewriteRule ^post/(.*)$ actions/Posts.php? [NC,L]
 RewriteRule ^posts/(.*)$ actions/Posts.php? [NC,L]
 
+RewriteRule ^categories/ actions/Categories.php? [NC,L]
+RewriteRule ^categories actions/Categories.php? [NC,L]
+RewriteRule ^category/ actions/Categories.php? [NC,L]
+RewriteRule ^category actions/Categories.php? [NC,L]
+RewriteRule ^category/(.*)$ actions/Categories.php? [NC,L]
+RewriteRule ^categories/(.*)$ actions/Categories.php? [NC,L]
+
 Options +FollowSymLinks
 RewriteEngine On

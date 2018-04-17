@@ -1,0 +1,97 @@
+<?php
+require_once __DIR__."/../objects/Category.php";
+require_once __DIR__."/../../sql/SQLConnection.php";
+
+class CategoryDatabase{
+
+    /**
+     * generates an id that's not yet used in the database
+     * @return string a new id
+     */
+    private static function generateId( ){
+        $id = "";
+        do {
+            $id = bin2hex( random_bytes( 50));
+        } while (CategoryDatabase::idExists( $id));
+        return $id;
+    }
+
+    public static function get( string $id){
+        $query = "SELECT id, name, description FROM blog_category WHERE id=:id";
+        SQLConnection::executeQuery( $query, array( ":id" => array( $id, PDO::PARAM_STR)));
+        $result = SQLConnection::getResults();
+        if (isset( $result[0]["id"])){
+            return new Category( $result[0]["id"], $result[0]["name"], $result[0]["description"]);
+        }else{
+            return null;
+        }
+    }
+
+    public static function getAll( ){
+        $query = "SELECT id FROM blog_category";
+        SQLConnection::executeQuery( $query);
+        $result = SQLConnection::getResults();
+        $ids = array();
+        foreach ($result as $line) {
+            $ids[] = $line["id"];
+        }
+        return $ids;
+    }
+
+    public static function createNew( string $name, string $description){
+        if (CategoryDatabase::nameExists( $name)){
+            return null;
+        }else{
+            $id = CategoryDatabase::generateId();
+            $query = "INSERT INTO blog_category ( id, name, description) VALUES( :id, :name, :description)";
+            SQLConnection::executeQuery( $query, array(
+                ":id" => array( $id, PDO::PARAM_STR),
+                ":name" => array( $name, PDO::PARAM_STR),
+                ":description" => array( $description, PDO::PARAM_STR)
+            ));
+            return CategoryDatabase::get( $id);
+        }
+    }
+
+    public static function nameExists( string $name){
+        $query = "SELECT count(*) FROM blog_category WHERE name=:name";
+        SQLConnection::executeQuery( $query, array( ":name" => array( $name, PDO::PARAM_STR)));
+        $result = SQLConnection::getResults();
+        if ($result[0][0] > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * searches if the id exists inside the database
+     * @param string $id the id to search for
+     * @return boolean true if the id exists, false if it doesn't exist
+     */
+    public static function idExists( string $id){
+        $query = "SELECT count(*) FROM blog_category WHERE id=:id";
+        SQLConnection::executeQuery( $query, array( ":id" => array( $id, PDO::PARAM_STR)));
+        $result = SQLConnection::getResults();
+        if ($result[0][0] > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public static function changeName( string $id, string $name){
+        if (CategoryDatabase::nameExists( $name)){
+            return null;
+        }else{
+            $query = "UPDATE TABLE blog_category SET name=:name WHERE id=:id";
+            SQLConnection::executeQuery( $query, array( 
+                ":name" => array( $name, PDO::PARAM_STR),
+                ":id" => array( $id, PDO::PARAM_STR)
+            ));
+            return CategoryDatabase::get( $id);
+        }
+    }
+
+
+}
