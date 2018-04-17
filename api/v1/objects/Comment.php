@@ -13,6 +13,7 @@ class Comment implements JsonSerializable{
 
 
     /**
+     * constructor
      * @var string $id the id of the comment
      * @var string $post the id of the post it's attached to
      * @var string $author the id of the author of this comment
@@ -28,6 +29,7 @@ class Comment implements JsonSerializable{
     }
 
     /**
+     * gets the id
      * @return string the id of the comment
      */
     public function getId(){
@@ -35,6 +37,7 @@ class Comment implements JsonSerializable{
     }
 
     /**
+     * gets the id of the author
      * @return string the id of the author
      */
     public function getAuthor( ){
@@ -42,6 +45,7 @@ class Comment implements JsonSerializable{
     }
 
     /**
+     * gets the id of the post it was commented on
      * @return string the id of the post this comment is attached to
      */
     public function getPost( ){
@@ -49,6 +53,7 @@ class Comment implements JsonSerializable{
     }
 
     /**
+     * gets the body
      * @return string the body of the comment
      */
     public function getBody( ){
@@ -56,6 +61,7 @@ class Comment implements JsonSerializable{
     }
 
     /**
+     * gets the time stamp
      * @return int the time stamp of the comment (unix time)
      */
     public function getTime(){

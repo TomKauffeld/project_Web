@@ -8,15 +8,19 @@ require_once __DIR__."/TokenManagement.php";
 class UserManagement{
 
     /**
+     * gets all the posts made by a specific user
      * @param string $id the id of the user
-     * @return array list of the ids of the posts made by this user
+     * @return array the reponse
      */
     public static function getPosts( string $id){
         return PostManagement::getAllFromUser( $id);
     }
 
     /**
-     * @return array list of the ids of the users
+     * gets all users
+     * @param int $limit the number of users to get, -1 for all
+     * @param int $offset the number of users to skip, -1 or 0 for no offset
+     * @return array the response
      */
     public static function getAll( int $limit = -1, int $offset = -1){
         $ids = UserDataBase::getAll( $limit, $offset);
@@ -24,17 +28,18 @@ class UserManagement{
     }
 
     /**
+     * gets all the comments made by a specific user
      * @param string $id the id of the user
-     * @return array list of the ids of the comments made by this user
+     * @return array the response
      */
     public static function getComments( string $id){
         return CommentManagement::getAllFromUser( $id);
     }
 
     /**
-     * Gets an user from the database based on the id
+     * gets an user 
      * @param string $id the id of the user to search
-     * @return User|NULL when the user is found, else NULL
+     * @return array the response
      */
     public static function get( string $id){
         $user = UserDataBase::get( $id);
@@ -46,7 +51,7 @@ class UserManagement{
     }
 
     /**
-     * 
+     * logges a user in, creates a token
      * @param string $username the username
      * @param string $password the password
      * @return array the response
@@ -87,8 +92,15 @@ class UserManagement{
         }
     }
 
-    public static function changeAdminLvL( string $token, string $id, int $adminLvL){
-        $user = TokenManagement::checkTokenString( $token);
+    /**
+     * changes the admin lvl of an user
+     * @param array $token the token of the user making the change
+     * @param string $id the id of the user to make the change to
+     * @param string $adminLvL the new admin lvl of the user
+     * @return array the response
+     */
+    public static function changeAdminLvL( array $token, string $id, int $adminLvL){
+        $user = TokenManagement::checkTokenJson( $token);
         if ($user != null){
             if ($user["adminLvL"] >= 2){
                 if (UserDataBase::changeAdminLvL( $id, $adminLvL)){

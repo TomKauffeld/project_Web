@@ -10,9 +10,9 @@ switch ($method){
         $lenght = count( $url_arr);
         $i = array_search( "api", $url_arr);
         if (($i+3 == $lenght || $i+4 == $lenght) && !(isset( $url_arr[$i+3]) && strlen( $url_arr[$i+3]) > 0)){
-            if (isset( $request["token"]) && isset( $request["title"]) && isset( $request["body"]) && isset( $request["category"])){
+            if (isset( $request["token"]) && isset( $request["title"]) && isset( $request["body"]) && isset( $request["categories"])){
                 if (((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443)){
-                    $response = PostManagement::createNew( $request["token"], $request["category"], $request["title"], $request["body"]);
+                    $response = PostManagement::createNew( $request["token"], $request["categories"], $request["title"], $request["body"]);
                     if ($response["status"] == "ERROR"){
                         if ($response["error"] == "INVALID TOKEN"){
                             http_response_code( 401);

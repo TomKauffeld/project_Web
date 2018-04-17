@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__."/../../sql/SQLConnection.php";
-
 class Post implements JsonSerializable{
 
     /**
@@ -10,26 +8,29 @@ class Post implements JsonSerializable{
      * @var int $time when it was posted (unix time stamp)
      * @var string $author the id of the author of this post
      * @var string $body the body of the post
+     * @var array $categories the categories of the post
      */
-    protected $id, $title, $time, $author, $body, $category;
+    protected $id, $title, $time, $author, $body, $categories;
 
     /**
+     * contructor
      * @param string $id the id of the post
      * @param string $author the id of the author of this post
      * @param string $title the title of the post
      * @param string $body the body of the post
      * @param int $time when it was posted (unix time stamp)
      */
-    public function __construct( string $id, string $author, string $category, string $title, string $body, int $time){
+    public function __construct( string $id, string $author, array $categories, string $title, string $body, int $time){
         $this->id = $id;
         $this->author = $author;
         $this->title = $title;
         $this->body = $body;
         $this->time = $time;
-        $this->category = $category;
+        $this->categories = $categories;
     }
 
     /**
+     * gets the id
      * @return string the id of the post
      */
     public function getId(){
@@ -37,6 +38,7 @@ class Post implements JsonSerializable{
     }
 
     /**
+     * gets the author
      * @return string the id of the author
      */
     public function getAuthor( ){
@@ -44,6 +46,7 @@ class Post implements JsonSerializable{
     }
 
     /**
+     * gets the title
      * @return string the title of the post
      */
     public function getTitle( ){
@@ -51,6 +54,7 @@ class Post implements JsonSerializable{
     }
 
     /**
+     * gets the body of the post
      * @return string the body of the post
      */
     public function getBody( ){
@@ -58,14 +62,27 @@ class Post implements JsonSerializable{
     }
 
     /**
+     * gets the time stamp
      * @return int the time stamp of the post (unix time)
      */
     public function getTime(){
         return $this->time;
     }
 
-    public function getCategory(){
-        return $this->category;
+    /**
+     * gets the categories from the post
+     * @return array the ids of the categories
+     */
+    public function getCategories(){
+        return $this->categories;
+    }
+
+    /**
+     * adds a category to the post
+     * @param string $category the id of the category to add
+     */
+    public function addCategory( string $category){
+        $this->categories[] = $category;
     }
 
     /**
@@ -77,7 +94,8 @@ class Post implements JsonSerializable{
         return [
             "id" => $this->getId(),
             "author" => $this->getAuthor(),
-            "category" => $this->getCategory(),
+            "nbCategories" => count( $this->getCategories()),
+            "categories" => $this->getCategories(),
             "title" => $this->getTitle(),
             "body" => $this->getBody(),
             "time" => $this->getTime()

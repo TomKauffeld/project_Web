@@ -63,6 +63,12 @@ class UserDataBase{
         }
     }
 
+    /**
+     * Changes the adminLvL of a user
+     * @param string $id the id of the user to change
+     * @param int $adminLvL the new adminLvL of the user : 0 user, 1 admin, 2 super-admin
+     * @return boolean true of successfull, false otherwise
+     */
     public static function changeAdminLvL( string $id, int $adminLvL){
         if ($adminLvL >= 0 && $adminLvL <= 2 &&UserDataBase::idExists( $id)){
             $query = "UPDATE blog_user SET adminLvL=:adminLvL WHERE id=:id";

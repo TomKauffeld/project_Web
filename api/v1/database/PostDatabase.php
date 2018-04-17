@@ -35,17 +35,35 @@ class PostDatabase{
         }
     }
 
+    /**
+     * gets a post from the database
+     * @param string $id the id to search for
+     * @return Post|NULL the post if id the id exists, null otherwise
+     */
     public static function get( string $id){
-        $query = "SELECT id, author, category, title, body, time FROM blog_post WHERE id=:id";
+        $query = "SELECT id, author, title, body, time FROM blog_post WHERE id=:id";
         SQLConnection::executeQuery( $query, array( ":id" => array( $id, PDO::PARAM_INT)));
         $result = SQLConnection::getResults();
         if (isset( $result[0]["id"])){
-            return new Post( $result[0]["id"], $result[0]["author"], $result[0]["category"], $result[0]["title"], $result[0]["body"], $result[0]["time"]);
+            $post =  new Post( $result[0]["id"], $result[0]["author"], array(), $result[0]["title"], $result[0]["body"], $result[0]["time"]);
+            $query = "SELECT category FROM blog_post_category WHERE post=:id";
+            SQLConnection::executeQuery( $query, array( ":id" => array( $id, PDO::PARAM_INT)));
+            $result = SQLConnection::getResults();
+            foreach ($result as $line) {
+                $post->addCategory( $line["category"]);
+            }
+            return $post;
         }else{
             return null;
         }
     }
 
+    /**
+     * gets the ids of all the posts
+     * @param int $limit the number of posts to get, -1 for all
+     * @param int $offset the number of posts to skip, -1 or 0 for no offset
+     * @return array the ids of the posts
+     */
     public static function getAll( int $limit = -1, int $offset = -1){
         if ($limit > 0){
             if ($offset >= 0){
@@ -71,6 +89,11 @@ class PostDatabase{
         return $ids;
     }
 
+    /**
+     * gets all the posts made by a user
+     * @param string $id the id of the user to search for
+     * @return array the ids of the posts made by the user
+     */
     public static function getAllFromUser( string $id){
         $query = "SELECT id FROM blog_post WHERE author=:id";
         SQLConnection::executeQuery( $query, array( ":id" => array( $id, PDO::PARAM_STR)));
@@ -82,13 +105,18 @@ class PostDatabase{
         return $ids;
     }
 
+    /**
+     * gets all the posts with a specific category
+     * @param string $id the id of the category to search for
+     * @return array the ids of the posts with the category
+     */
     public static function getAllFromCategory( string $id){
-        $query = "SELECT id FROM blog_post WHERE category=:id";
+        $query = "SELECT post FROM blog_post_category WHERE category=:id";
         SQLConnection::executeQuery( $query, array( ":id" => array( $id, PDO::PARAM_STR)));
         $result = SQLConnection::getResults();
         $ids = array();
         foreach ($result as $line) {
-            $ids[] = $line["id"];
+            $ids[] = $line["post"];
         }
         return $ids;
     }
@@ -96,22 +124,40 @@ class PostDatabase{
     /**
      * creates a new post inside the database
      * @param string $author the id of the user that made the post
+     * @param array $categories the ids of the categories this post has (minimum 1)
      * @param string $title the title of the post
      * @param string $body the body of the post
      * @return Post|NULL returns the post if successfull, null otherwise
      */
-    public static function createNew( string $author, string $category, string $title, string $body){
-        if (UserDataBase::idExists( $author) && CategoryDatabase::idExists( $category)){
+    public static function createNew( string $author, array $categories, string $title, string $body){
+        if (count( $categories) <= 0){
+            return null;
+        }
+        if (count(array_unique($categories))<count($categories)){
+            return null;
+        }
+        foreach ($categories as $category) {
+            if (!CategoryDatabase::idExists( $category)){
+                return null;
+            }
+        }
+        if (UserDataBase::idExists( $author)){
             $id = PostDatabase::generateId();
-            $query = "INSERT INTO blog_post ( id, author, category, title, body, time) VALUES( :id, :author, :category, :title, :body, :time)";
+            $query = "INSERT INTO blog_post ( id, author, title, body, time) VALUES( :id, :author, :title, :body, :time)";
             $val = SQLConnection::executeQuery( $query, array(
                 ":id" => array( $id, PDO::PARAM_STR),
                 ":author" => array( $author, PDO::PARAM_STR),
-                ":category" => array( $category, PDO::PARAM_STR),
                 ":title" => array( $title, PDO::PARAM_STR),
                 ":body" => array( $body, PDO::PARAM_STR),
                 ":time" => array( time(), PDO::PARAM_INT)
             ));
+            $query = "INSERT INTO blog_post_category (post, category) VALUES( :post, :category)";
+            foreach( $categories as $category){
+                $val = $val && SQLConnection::executeQuery( $query, array(
+                    ":post" => array( $id, PDO::PARAM_STR),
+                    ":category" => array( $category, PDO::PARAM_STR)
+                ));
+            }
             if ($val){
                 return PostDatabase::get( $id);
             }else{
