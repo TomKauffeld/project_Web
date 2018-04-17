@@ -4,13 +4,14 @@ require_once __DIR__."/../managers/UserManagement.php";
 $method = $_SERVER['REQUEST_METHOD'];
 switch ($method){
     case "POST":
+        $request = json_decode( file_get_contents( 'php://input'), true);
         $url_arr = explode( "/", $_SERVER["REQUEST_URI"]);
         $lenght = count( $url_arr);
         $i = array_search( "api", $url_arr);
         if (($i+3 == $lenght || $i+4 == $lenght) && !(isset( $url_arr[$i+3]) && strlen( $url_arr[$i+3]) > 0)){
-            if (isset( $_POST["username"]) && isset( $_POST["password"])){
+            if (isset( $request["username"]) && isset( $request["password"])){
                 if (((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443)){
-                    echo json_encode( UserManagement::createNew( $_POST["username"], $_POST["password"]));
+                    echo json_encode( UserManagement::createNew( $request["username"], $request["password"]));
                 }else{
                     http_response_code( 505);
                     echo json_encode( array( "status" => "ERROR", "error" => "NOT A SECURE CONNECTION", "version" => "v1"));
@@ -69,6 +70,7 @@ switch ($method){
         }
         break;
     case "PATCH":
+        $request = json_decode( file_get_contents( 'php://input'), true);
         $all = explode( "?", $_SERVER["REQUEST_URI"]);
         $url_arr = explode( "/", $all[0]);
         $lenght = count( $url_arr);
@@ -78,8 +80,8 @@ switch ($method){
                 if (isset( $url_arr[$i+3]) && strlen($url_arr[$i+3]) > 0){
                     $id = $url_arr[$i+3];
                     if (UserManagement::idExists( $id)){
-                        if (isset( $_POST["token"]) && isset( $_POST["adminLvL"])){
-                            $ret = UserManagement::changeAdminLvL( $_POST["token"], $id, $_POST["adminLvL"]);
+                        if (isset( $request["token"]) && isset( $request["adminLvL"])){
+                            $ret = UserManagement::changeAdminLvL( $request["token"], $id, $request["adminLvL"]);
                             if ($ret["status"] != "OK"){
                                 if ($ret["error"] == "INVALID TOKEN"){
                                     http_response_code( 401);

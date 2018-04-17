@@ -6,29 +6,41 @@ require_once __DIR__."/../objects/User.php";
 $method = $_SERVER['REQUEST_METHOD'];
 switch ($method){
     case "POST":
+        $request = json_decode( file_get_contents( 'php://input'), true);
         $url_arr = explode( "/", $_SERVER["REQUEST_URI"]);
         $lenght = count( $url_arr);
         $i = array_search( "api", $url_arr);
         if (($i+3 == $lenght || $i+4 == $lenght || $i+5 == $lenght) && ($url_arr[$i+2] == "auth") && !(isset( $url_arr[$i+4]) && strlen( $url_arr[$i+4]) > 0)){
-            switch ($variable) {
+            switch ($url_arr[$i+3]) {
                 case "validate":
-                    if (isset( $_POST["token"]) && strlen( $_POST["token"]) > 0){
-                        $user = TokenManagement::checkTokenString( $_POST["token"]);
-                        if ($user == null){
-                            return json_encode( array( "status" => "OK", "valid" => false));
+                    if (((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443)){
+                        if (isset( $request["token"]) && count($request["token"]) > 0){
+                            $user = TokenManagement::checkTokenJson( $request["token"]);
+                            if ($user == null){
+                                echo json_encode( array( "status" => "OK", "valid" => false, "version" => "v1"));
+                            }else{
+                                echo json_encode( array( "status" => "OK", "valid" => true, "version" => "v1"));
+                            }
                         }else{
-                            return json_encode( array( "status" => "OK", "valid" => true));
+                            include __DIR__."/ErrorParams.php";
                         }
                     }else{
-                        include __DIR__."/ErrorParams.php";
+                        http_response_code( 505);
+                        echo json_encode( array( "status" => "ERROR", "error" => "NOT A SECURE CONNECTION", "version" => "v1"));
                     }
                     break;
                 case "login":
-                    if (isset( $_POST["username"]) && isset( $_POST["password"]) && strlen( $_POST["username"]) > 0 && strlen( $_POST["password"]) > 0){
-                        return UserManagement::loginWithPassword( $_POST["username"], $_POST["password"]);
+                    if (((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443)){
+                        if (isset( $request["username"]) && isset( $request["password"]) && strlen( $request["username"]) > 0 && strlen( $request["password"]) > 0){
+                            echo json_encode(UserManagement::loginWithPassword( $request["username"], $request["password"]));
+                        }else{
+                            include __DIR__."/ErrorParams.php";
+                        }
                     }else{
-                        include __DIR__."/ErrorParams.php";
+                        http_response_code( 505);
+                        echo json_encode( array( "status" => "ERROR", "error" => "NOT A SECURE CONNECTION", "version" => "v1"));
                     }
+                    break;
                 default:
                     include __DIR__."/ErrorRequest.php";
                     break;
