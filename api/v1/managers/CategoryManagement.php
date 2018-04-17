@@ -49,12 +49,13 @@ class CategoryManagement{
 
     /**
      * changes the name of a category
+     * @param array $token the token
      * @param string $id the id of the category to change
      * @param string $name the new name of the category
      * @return array the response
      */
-    public static function changeName( string $token, string $id, string $name){
-        $user = TokenManagement::checkTokenString( $token);
+    public static function changeName( array $token, string $id, string $name){
+        $user = TokenManagement::checkTokenJson( $token);
         if ($user != null){
             if ($user->getAdminLvL() >= 2){
                 $category = CategoryDatabase::changeName( $id, $name);
@@ -73,13 +74,13 @@ class CategoryManagement{
 
     /**
      * creates a new category
-     * @param string $token the token of the user creating this category
+     * @param array $token the token of the user creating this category
      * @param string $name the name of the new category
      * @param string $description the description of the new category
      * @return array the response
      */
-    public static function createNew( string $token, string $name, string $description){
-        $user = TokenManagement::checkTokenString( $token);
+    public static function createNew( array $token, string $name, string $description){
+        $user = TokenManagement::checkTokenJson( $token);
         if ($user != null){
             if ($user->getAdminLvL() >= 2){
                 $category = CategoryDatabase::createNew( $name, $description);

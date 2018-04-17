@@ -94,13 +94,13 @@ class UserManagement{
 
     /**
      * changes the admin lvl of an user
-     * @param string $token the token of the user making the change
+     * @param array $token the token of the user making the change
      * @param string $id the id of the user to make the change to
      * @param string $adminLvL the new admin lvl of the user
      * @return array the response
      */
-    public static function changeAdminLvL( string $token, string $id, int $adminLvL){
-        $user = TokenManagement::checkTokenString( $token);
+    public static function changeAdminLvL( array $token, string $id, int $adminLvL){
+        $user = TokenManagement::checkTokenJson( $token);
         if ($user != null){
             if ($user["adminLvL"] >= 2){
                 if (UserDataBase::changeAdminLvL( $id, $adminLvL)){

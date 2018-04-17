@@ -73,14 +73,14 @@ class PostManagement{
 
     /**
      * creates a new post
-     * @param string $token the token of the user that makes the post
+     * @param array $token the token of the user that makes the post
      * @param array $categories the ids of the categories this post has (minimum 1)
      * @param string $title the title of the post
      * @param string $body the body of the post
      * @return array the response
      */
-    public static function createNew( string $token, array $categories, string $title, string $body){
-        $user = TokenManagement::checkTokenString( $token);
+    public static function createNew( array $token, array $categories, string $title, string $body){
+        $user = TokenManagement::checkTokenJson( $token);
         if ($user != null){
             if ($user["adminLvL"] >= 1){
                 $post = PostDatabase::createNew( $user["id"], $categories, $title, $body);

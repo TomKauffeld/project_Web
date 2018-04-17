@@ -1,0 +1,281 @@
+<div id=actions class=details>
+    <ul>
+        <li>
+            <h2 onclick='$("#user").toggle("slow");$(".functions:not(#user)").hide("slow");$(".function").hide("slow");'>user</h2>
+            <div id=user class=functions>
+                <ul>
+                    <li>
+                        <h3 onclick='$("#get_user").toggle("slow");$(".function:not(#get_user)").hide("slow");'>GET /user</h3>
+                        <div id=get_user class=function>
+                            <b>gets all users</b><br>
+                            optional parameters :
+                            <table>
+                                <tr>
+                                    <th>limit</th>
+                                    <td>: how many users you want to get</td>
+                                </tr>
+                                <tr>
+                                    <th>offset</th>
+                                    <td>: how many users you want to skip</td>
+                                </tr>
+                            </table>
+                            exemple :<br>
+                            <table>
+                                <tr>
+                                    <td>request</td>
+                                    <td>https://pubflare.ovh/school/blog/api/latest/user?limit=2&amp;offset=0</td>
+                                </tr>
+                                <tr>
+                                    <td>response</td>
+                                    <td>{"status":"OK","lenght":2,"users":["abcd","efgh"],"version":"v1"}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                    <li>
+                        <h3 onclick='$("#get_user_id").toggle("slow");$(".function:not(#get_user_id)").hide("slow");'>GET /user/{id}</h3>
+                        <div id=get_user_id class=function>
+                            <b>gets an user</b><br>
+                            parameter :
+                            <table>
+                                <tr>
+                                    <th>id</th>
+                                    <td>: the id of the user you want to get</td>
+                                </tr>
+                            </table>
+                            exemple :<br>
+                            <table>
+                                <tr>
+                                    <td>request</td>
+                                    <td>https://pubflare.ovh/school/blog/api/latest/user/abcd</td>
+                                </tr>
+                                <tr>
+                                    <td>response</td>
+                                    <td>{"status":"OK","user":{"id":"abcd","username":"test","adminLvL":0},"version":"v1"}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                    <li>
+                        <h3 onclick='$("#get_user_comments").toggle("slow");$(".function:not(#get_user_comments)").hide("slow");'>GET /user/{id}/comments</h3>
+                        <div id=get_user_comments class=function>
+                            <b>get all comments made by a user</b><br>
+                            parameter :
+                            <table>
+                                <tr>
+                                    <th>id</th>
+                                    <td>: the id of the user you want to get the comments from</td>
+                                </tr>
+                            </table>
+                            exemple :<br>
+                            <table>
+                                <tr>
+                                    <td>request</td>
+                                    <td>https://pubflare.ovh/school/blog/api/latest/user/abcd/comments</td>
+                                </tr>
+                                <tr>
+                                    <td>response</td>
+                                    <td>{"status":"OK","lenght":2,"comments":["htje","gesge"],"version":"v1"}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                    <li>
+                        <h3 onclick='$("#get_user_posts").toggle("slow");$(".function:not(#get_user_posts)").hide("slow");'>GET /user/{id}/posts</h3>
+                        <div id=get_user_posts class=function>
+                            <b>get all posts made by a user</b><br>
+                            parameter :
+                            <table>
+                                <tr>
+                                    <th>id</th>
+                                    <td>: the id of the user you want to get the posts from</td>
+                                </tr>
+                            </table>
+                            exemple :<br>
+                            <table>
+                                <tr>
+                                    <td>request</td>
+                                    <td>https://pubflare.ovh/school/blog/api/latest/user/abcd/posts</td>
+                                </tr>
+                                <tr>
+                                    <td>response</td>
+                                    <td>{"status":"OK","lenght":2,"posts":["fesfe","gregr"],"version":"v1"}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                    <li>
+                        <h3 onclick='$("#post_user").toggle("slow");$(".function:not(#post_user)").hide("slow");'>POST /user</h3>
+                        <div id=post_user class=function>
+                            <b>creates a new user</b><br>
+                            parameters (must be in a json format inside of the request body) :
+                            <table>
+                                <tr>
+                                    <th>username</th>
+                                    <td>: the username of the user to create (at least 3 characters)</td>
+                                </tr>
+                                <tr>
+                                    <th>password</th>
+                                    <td>: the password of the user to create (at least 6 characters, different than the username)</td>
+                                </tr>
+                            </table>
+                            exemple :<br>
+                            <table>
+                                <tr>
+                                    <td rowspan="2">request</td>
+                                    <td>url</td>
+                                    <td>https://pubflare.ovh/school/blog/api/latest/user</td>
+                                </tr>
+                                <tr>
+                                    <td>body</td>
+                                    <td>{"username":"test","password":"thisIsAPassword"}</td>
+                                </tr>
+                                <tr>
+                                    <td>response</td>
+                                    <td></td>
+                                    <td>{"status":"OK","token":{"id":"abcd","b":157952,"c":"gesg","d":"fesf"},"user":{"id":"abcd","username":"test","adminLvL":0},"version":"v1"}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                    <li>
+                        <h3 onclick='$("#patch_user").toggle("slow");$(".function:not(#patch_user)").hide("slow");'>PATCH /user/{id}</h3>
+                        <div id=patch_user class=function>
+                            <b>changes the adminLvL of an user</b><br>
+                            parameters :
+                            <table>
+                                <tr>
+                                    <th>id</th>
+                                    <td>: the id of the user to change the adminLvL (must be in the url)</td>
+                                </tr>
+                                <tr>
+                                    <th>token</th>
+                                    <td>: your token (you must have an adminLvL of 2 in order to execute this comment), (must be in a json format inside the request body)</td>
+                                </tr>
+                                <tr>
+                                    <th>adminLvL</th>
+                                    <td>: the new adminLvL (must be either 0, 1 or 2), (must be in a json format inside the request body)</td>
+                                </tr>
+                            </table>
+                            exemple :<br>
+                            <table>
+                                <tr>
+                                    <td rowspan="2">request</td>
+                                    <td>url</td>
+                                    <td>https://pubflare.ovh/school/blog/api/latest/user/abcd</td>
+                                </tr>
+                                <tr>
+                                    <td>body</td>
+                                    <td>{"token":{"id":"abcd","b":157952,"c":"gesg","d":"fesf"},"adminLvL":2}</td>
+                                </tr>
+                                <tr>
+                                    <td>response</td>
+                                    <td></td>
+                                    <td>{"status":"OK","version":"v1"}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <h2 onclick='$("#category").toggle("slow");$(".functions:not(#category)").hide("slow");$(".function").hide("slow");'>category</h2>
+            <div id=category class=functions>
+                <ul>
+                    <li>
+                        <h3 onclick='$("#get_category").toggle("slow");$(".function:not(#get_category)").hide("slow");'>GET /category</h3>
+                        <div id=get_category class=function>
+                            <b>gets all categories</b><br>
+                            exemple :<br>
+                            <table>
+                                <tr>
+                                    <td>request</td>
+                                    <td>https://pubflare.ovh/school/blog/api/latest/category</td>
+                                </tr>
+                                <tr>
+                                    <td>response</td>
+                                    <td>{"status":"OK","lenght":2,"categories":["aecd","eegh"],"version":"v1"}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                    <li>
+                        <h3 onclick='$("#get_category_id").toggle("slow");$(".function:not(#get_category_id)").hide("slow");'>GET /category/{id}</h3>
+                        <div id=get_category_id class=function>
+                            <b>gets a category</b><br>
+                            parameter :
+                            <table>
+                                <tr>
+                                    <th>id</th>
+                                    <td>: the id of the category you want to get</td>
+                                </tr>
+                            </table>
+                            exemple :<br>
+                            <table>
+                                <tr>
+                                    <td>request</td>
+                                    <td>https://pubflare.ovh/school/blog/api/latest/category/aecd</td>
+                                </tr>
+                                <tr>
+                                    <td>response</td>
+                                    <td>{"status":"OK","user":{"id":"aecd","name":"test","description":"this is a test category"},"version":"v1"}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                    <li>
+                        <h3 onclick='$("#get_category_posts").toggle("slow");$(".function:not(#get_category_posts)").hide("slow");'>GET /category/{id}/posts</h3>
+                        <div id=get_category_posts class=function>
+                            <b>get all posts made that have a specific category</b><br>
+                            parameter :
+                            <table>
+                                <tr>
+                                    <th>id</th>
+                                    <td>: the id of the category you want to get the posts from</td>
+                                </tr>
+                            </table>
+                            exemple :<br>
+                            <table>
+                                <tr>
+                                    <td>request</td>
+                                    <td>https://pubflare.ovh/school/blog/api/latest/category/aecd/posts</td>
+                                </tr>
+                                <tr>
+                                    <td>response</td>
+                                    <td>{"status":"OK","lenght":2,"posts":["fesfe","gregr"],"version":"v1"}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                    <li>POST /category : create a category</li>
+                    <li>PATCH /category/{id} : update the name</li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <h2 onclick='$("#post").toggle("slow");$(".functions:not(#post)").hide("slow");$(".function").hide("slow");'>post</h2>
+            <ul id=post class=functions>
+                <li>GET /post[?limit={limit}[&amp;offset={offset}]] : get all posts</li>
+                <li>GET /post/{id} : get a post</li>
+                <li>GET /post/{id}/comments : get the comments on the post</li>
+                <li>POST /post : create a post</li>
+            </ul>
+        </li>
+        <li>
+            <h2 onclick='$("#comment").toggle("slow");$(".functions:not(#comment)").hide("slow");$(".function").hide("slow");'>comment</h2>
+            <ul id=comment class=functions>
+                <li>GET /comment[?limit={limit}[&amp;offset={offset}]] : get all comments</li>
+                <li>GET /comment/{id} : get a comment</li>
+                <li>POST /comment : create a comment</li>
+            </ul>
+        </li>
+        <li>
+            <h2 onclick='$("#auth").toggle("slow");$(".functions:not(#auth)").hide("slow");$(".function").hide("slow");'>auth</h2>
+            <ul id=auth class=functions>
+                <li>POST /auth/validate : validate a token</li>
+                <li>POST /auth/login : login a user and get a token</li>
+            </ul>
+        </li>
+    </ul>
+</div>

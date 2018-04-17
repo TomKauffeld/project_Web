@@ -63,13 +63,13 @@ class CommentManagement{
 
     /**
      * creates a new comment
-     * @param string $token the token of the user that makes the comment
+     * @param array $token the token of the user that makes the comment
      * @param string $post the id of the post the comment is made on
      * @param string $body the body of the comment
      * @return array the response
      */
-    public static function createNew( string $token, string $post, string $body){
-        $user = TokenManagement::checkTokenString( $token);
+    public static function createNew( array $token, string $post, string $body){
+        $user = TokenManagement::checkTokenJson( $token);
         if ($user != null){
             $comment = CommentDatabase::createNew( $token["id"], $post, $body);
             if ($comment == null){
