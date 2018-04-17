@@ -25,5 +25,12 @@ RewriteRule ^post /api/v1/post [NC,L]
 RewriteRule ^posts/(.*)$ /api/v1/posts/$1 [NC,L]
 RewriteRule ^post/(.*)$ /api/v1/post/$1 [NC,L]
 
+RewriteRule ^categories/ /api/v1/categories/ [NC,L]
+RewriteRule ^categories /api/v1/categories [NC,L]
+RewriteRule ^category/ /api/v1/category/ [NC,L]
+RewriteRule ^category /api/v1/category [NC,L]
+RewriteRule ^categories/(.*)$ /api/v1/categories/$1 [NC,L]
+RewriteRule ^category/(.*)$ /api/v1/category/$1 [NC,L]
+
 Options +FollowSymLinks
 RewriteEngine On

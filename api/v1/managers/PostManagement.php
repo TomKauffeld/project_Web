@@ -31,15 +31,20 @@ class PostManagement{
         return array( "status" => "OK", "lenght" => count( $ids), "posts" => $ids, "version" => "v1");
     }
 
+    public static function getAllFromCategory( string $id){
+        $ids = PostDatabase::getAllFromCategory( $id);
+        return array( "status" => "OK", "lenght" => count( $ids), "posts" => $ids, "version" => "v1");
+    }
+
     public static function getComments( string $id){
         return CommentManagement::getAllFromPost( $id);
     }
 
-    public static function createNew( string $token, string $title, string $body){
+    public static function createNew( string $token, string $category, string $title, string $body){
         $user = TokenManagement::checkTokenString( $token);
         if ($user != null){
             if ($user["adminLvL"] >= 1){
-                $post = PostDatabase::createNew( $user["id"], $title, $body);
+                $post = PostDatabase::createNew( $user["id"], $category, $title, $body);
                 return array( "status" => "OK", "id" => $post->getId(), "version" => "v1");
             }else{
                 return array( "status" => "ERROR", "error" => "NOT PERMITTED", "version" => "v1");

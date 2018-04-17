@@ -14,7 +14,7 @@ class CommentDatabase{
     private static function generateId( ){
         $id = "";
         do {
-            $id = bin2hex( random_bytes( 64));
+            $id = bin2hex( random_bytes( 50));
         } while (CommentDatabase::idExists( $id));
         return $id;
     }
@@ -122,7 +122,7 @@ class CommentDatabase{
     public static function createNew( string $author, string $post, string $body){
         if (UserDataBase::idExists( $author) && PostDatabase::idExists( $post)){
             $id = CommentDatabase::generateId();
-            $query = "INSERT INTO blog_comment VALUES( :id, :post, :author, :body, :time)";
+            $query = "INSERT INTO blog_comment ( id, post, author, body, time) VALUES( :id, :post, :author, :body, :time)";
             $val = SQLConnection::executeQuery( $query, array(
                 ":id" => array( $id, PDO::PARAM_STR),
                 ":post" => array( $post, PDO::PARAM_STR),

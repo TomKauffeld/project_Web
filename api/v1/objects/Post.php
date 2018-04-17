@@ -11,7 +11,7 @@ class Post implements JsonSerializable{
      * @var string $author the id of the author of this post
      * @var string $body the body of the post
      */
-    protected $id, $title, $time, $author, $body;
+    protected $id, $title, $time, $author, $body, $category;
 
     /**
      * @param string $id the id of the post
@@ -20,12 +20,13 @@ class Post implements JsonSerializable{
      * @param string $body the body of the post
      * @param int $time when it was posted (unix time stamp)
      */
-    public function __construct( string $id, string $author, string $title, string $body, int $time){
+    public function __construct( string $id, string $author, string $category, string $title, string $body, int $time){
         $this->id = $id;
         $this->author = $author;
         $this->title = $title;
         $this->body = $body;
         $this->time = $time;
+        $this->category = $category;
     }
 
     /**
@@ -63,6 +64,10 @@ class Post implements JsonSerializable{
         return $this->time;
     }
 
+    public function getCategory(){
+        return $this->category;
+    }
+
     /**
      * {@inheritdoc}
      * @see JsonSerializable::jsonSerialize()
@@ -72,6 +77,7 @@ class Post implements JsonSerializable{
         return [
             "id" => $this->getId(),
             "author" => $this->getAuthor(),
+            "category" => $this->getCategory(),
             "title" => $this->getTitle(),
             "body" => $this->getBody(),
             "time" => $this->getTime()

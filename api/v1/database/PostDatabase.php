@@ -2,6 +2,8 @@
 
 require_once __DIR__."/../objects/Post.php";
 require_once __DIR__."/../../sql/SQLConnection.php";
+require_once __DIR__."/CategoryDatabase.php";
+require_once __DIR__."/UserDatabase.php";
 
 class PostDatabase{
 
@@ -12,7 +14,7 @@ class PostDatabase{
     private static function generateId( ){
         $id = "";
         do {
-            $id = bin2hex( random_bytes( 64));
+            $id = bin2hex( random_bytes( 50));
         } while (PostDatabase::idExists( $id));
         return $id;
     }
@@ -34,11 +36,11 @@ class PostDatabase{
     }
 
     public static function get( string $id){
-        $query = "SELECT id, author, title, body, time FROM blog_post WHERE id=:id";
+        $query = "SELECT id, author, category, title, body, time FROM blog_post WHERE id=:id";
         SQLConnection::executeQuery( $query, array( ":id" => array( $id, PDO::PARAM_INT)));
         $result = SQLConnection::getResults();
         if (isset( $result[0]["id"])){
-            return new Post( $result[0]["id"], $result[0]["author"], $result[0]["title"], $result[0]["body"], $result[0]["time"]);
+            return new Post( $result[0]["id"], $result[0]["author"], $result[0]["category"], $result[0]["title"], $result[0]["body"], $result[0]["time"]);
         }else{
             return null;
         }
@@ -80,6 +82,17 @@ class PostDatabase{
         return $ids;
     }
 
+    public static function getAllFromCategory( string $id){
+        $query = "SELECT id FROM blog_post WHERE category=:id";
+        SQLConnection::executeQuery( $query, array( ":id" => array( $id, PDO::PARAM_STR)));
+        $result = SQLConnection::getResults();
+        $ids = array();
+        foreach ($result as $line) {
+            $ids[] = $line["id"];
+        }
+        return $ids;
+    }
+
     /**
      * creates a new post inside the database
      * @param string $author the id of the user that made the post
@@ -87,13 +100,14 @@ class PostDatabase{
      * @param string $body the body of the post
      * @return Post|NULL returns the post if successfull, null otherwise
      */
-    public static function createNew( string $author, string $title, string $body){
-        if (UserDataBase::idExists( $author)){
+    public static function createNew( string $author, string $category, string $title, string $body){
+        if (UserDataBase::idExists( $author) && CategoryDatabase::idExists( $category)){
             $id = PostDatabase::generateId();
-            $query = "INSERT INTO blog_post VALUES( :id, :author, :title, :body, :time)";
+            $query = "INSERT INTO blog_post ( id, author, category, title, body, time) VALUES( :id, :author, :category, :title, :body, :time)";
             $val = SQLConnection::executeQuery( $query, array(
                 ":id" => array( $id, PDO::PARAM_STR),
                 ":author" => array( $author, PDO::PARAM_STR),
+                ":category" => array( $category, PDO::PARAM_STR),
                 ":title" => array( $title, PDO::PARAM_STR),
                 ":body" => array( $body, PDO::PARAM_STR),
                 ":time" => array( time(), PDO::PARAM_INT)
