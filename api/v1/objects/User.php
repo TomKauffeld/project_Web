@@ -7,15 +7,16 @@ class User implements JsonSerializable{
      * @var string $name the name of the user
      * @var int $adminLvL the level of permission : 0 user, 1 admin, 2 super-admin
      */
-    private $id, $name, $adminLvL;
+    private $id, $username, $adminLvL;
 
     /**
      * @param string $id the id of the user
      * @param string $name the name of the user
      * @param int $adminLvL the level of permission : 0 user, 1 admin, 2 super-admin
      */
-    public function __construct( string $id, string $name, int $adminLvL){
-        $this->name = $name;
+    public function __construct( string $id, string $username, int $adminLvL){
+        $this->id = $id;
+        $this->username = $username;
         $this->adminLvL = $adminLvL;
     }
 
@@ -29,8 +30,8 @@ class User implements JsonSerializable{
     /**
      * @return string the name of the user
      */
-    public function getName( ){
-        return $this->name;
+    public function getUsername( ){
+        return $this->username;
     }
 
     /**
@@ -48,7 +49,7 @@ class User implements JsonSerializable{
     {
         return [
             "id" => $this->getId(),
-            "username" => $this->getName(),
+            "username" => $this->getUsername(),
             "adminLvL" => $this->getAdminLvL()
         ];
     }

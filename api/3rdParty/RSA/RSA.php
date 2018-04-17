@@ -5,35 +5,49 @@ class RSA{
      */
   private static function getPrivateKey( ){
     $privateKey =
-    "-----BEGIN RSA PRIVATE KEY-----
-    
-    -----END RSA PRIVATE KEY-----";
-      return openssl_pkey_get_private( $privateKey, "");
+"-----BEGIN RSA PRIVATE KEY-----
+
+-----END RSA PRIVATE KEY-----
+";
+    $key = openssl_pkey_get_private( $privateKey, "");
+      return $key;
   }
   
   /**
    * @return resource Returns a positive key resource identifier on success, or FALSE on error.
    */
   public static function getPublicKey( ){
-      return openssl_pkey_get_public( "file:public.pem");
+    $publicKey = 
+"-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArmlEQuy4P6CLYKQZuKRD
+Pf14k+izpV7/czhIZaXR4MjNWkfDpZK+3u9S7LIudY56ieCbe3Vrqlhi62rVyzyW
+SoAhPAdamgRWE/eWkIZeAwqOl8OrR6gAlk1i5jK0pygRJ4OvyvgaGMEQOZZFTC6x
+dnfahNLiq32Sc5Y2fL6DIaVpkpaj39TGLRiY8mUCSmkG3Mp30ky39Hd+h1cTU7O5
+NPhqr/NEdrnaDiSDQKEcnkH8cXwRzM74zplMDO/sdb+QrlJsDRnDQ/5xuzQH9FAG
+07JcO8Ts9jpP6pnsOGb69uI/jisOjYyTjnRPiWwynG45dLxGgBGWcgXmWGajjtNi
+nwIDAQAB
+-----END PUBLIC KEY-----
+";
+    $key = openssl_pkey_get_public( $publicKey);
+      return $key;
   }
 
 // given the variables as constants:
 
   //Block size for encryption block cipher
-  private $ENCRYPT_BLOCK_SIZE = 200;// this for 2048 bit key for example, leaving some room
+  private static $ENCRYPT_BLOCK_SIZE = 200;// this for 2048 bit key for example, leaving some room
 
   //Block size for decryption block cipher
-  private $DECRYPT_BLOCK_SIZE = 256;// this again for 2048 bit key
+  private static $DECRYPT_BLOCK_SIZE = 256;// this again for 2048 bit key
 
          //For encryption we would use:
-  function encrypt($plainData, $privatePEMKey = null)
+  public static function encrypt($plainData, $privatePEMKey = null)
   {
     if ($privatePEMKey == null){
       $privatePEMKey = RSA::getPrivateKey();
     }
     $encrypted = '';
-    $plainData = str_split($plainData, $this->ENCRYPT_BLOCK_SIZE);
+    $plainData = str_split($plainData, RSA::$ENCRYPT_BLOCK_SIZE);
     foreach($plainData as $chunk)
     {
       $partialEncrypted = '';
@@ -48,7 +62,7 @@ class RSA{
   }
 
          //For decryption we would use:
-  protected function decrypt($data, $publicPEMKey = null)
+  public static function decrypt($data, $publicPEMKey = null)
   {
     if ($publicPEMKey == null){
       $publicPEMKey = RSA::getPrivateKey();
@@ -56,7 +70,7 @@ class RSA{
     $decrypted = '';
 
     //decode must be done before spliting for getting the binary String
-    $data = str_split(base64_decode($data), $this->DECRYPT_BLOCK_SIZE);
+    $data = str_split(base64_decode($data), RSA::$DECRYPT_BLOCK_SIZE);
 
     foreach($data as $chunk)
     {
