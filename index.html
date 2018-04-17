@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>Blog</title>
+        <div id="scripts_top">
+            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        </div>
+    </head>
+    <body>
+        <header>
+            <nav>
+
+            </nav>
+        </header>
+        <div id=body>
+            <div id="loading">
+                loading
+            </div>
+            <div id="not_logged_in">
+                <script type="text/javascript">$("#not_logged_in").hide()</script>
+                <form>
+                    <table>
+                        <tr><td>Username :</td><td><input autocomplete="username" id="username" type="text"></td></tr>
+                        <tr><td>Password :</td><td><input autocomplete="password" id="password" type="password"></td></tr>
+                        </table>
+                </form>
+                <button id="login">Login</button>
+                <button id="create">Create a new account</button>
+            </div>
+            <div id="logged_in">
+                <script type="text/javascript">$("#logged_in").hide()</script>
+                <div id="welcomeMsg"></div>
+                <button id="logout">Logout</button>
+            </div>
+        </div>
+        <footer>
+            <div id="scripts_end">
+                <script type="text/javascript" src="ressources/scripts/objects.js"></script>
+                <script type="text/javascript" src="ressources/scripts/utils.js"></script>
+                <script type="text/javascript" src="ressources/scripts/blog_api.js"></script>
+                <script type="text/javascript" src="ressources/scripts/app.js"></script>
+            </div>
+        </footer>
+    </body>
+</html>
