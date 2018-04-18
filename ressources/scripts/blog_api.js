@@ -5,8 +5,8 @@ _api_url = this._api_base_url + "/" + this._api_version;
 function _getToken( url, username, password, onSuccess, onFailure){
     send( url, "POST", "{\"username\":\""+username+"\",\"password\":\""+password+"\"}", function( json){
         if (json.status == "OK" && json.loggedIn){
-            localStorage.setItem( "token", JSON.stringify( json.token));
-            localStorage.setItem( "user", JSON.stringify( json.user));
+            store( "token", JSON.stringify( json.token));
+            store( "user", JSON.stringify( json.user));
             if (onSuccess != null)
                 onSuccess();
         }else{
@@ -16,8 +16,13 @@ function _getToken( url, username, password, onSuccess, onFailure){
     });
 }
 
+function logout(){
+    remove( "token");
+    remove( "user");
+}
+
 function hasToken( ){
-    if (load("token")){
+    if (getToken()){
         return true;
     }else{
         return false;
@@ -32,14 +37,32 @@ function createAccount( username, password, onSuccess = null, onFailure = null){
     _getToken( _api_url + "/user", username, password, onSuccess, onFailure);
 }
 
-function verifyToken( token, onSuccess = null, onFailure = null){
-    send( _api_url + "/auth/validate", "POST", "{\"token\":"+token+"}", function( json){
-        if (json.status == "OK" && json.valid){
-            if (onSuccess != null)
-                onSuccess();
-        }else{
-            if (onFailure != null)
-                onFailure();
-        }
-    });
+function verifyToken( onSuccess = null, onFailure = null){
+    if (getToken()){
+        send( _api_url + "/auth/validate", "POST", "{\"token\":"+getToken()+"}", function( json){
+            if (json.status == "OK" && json.valid){
+                if (onSuccess != null)
+                    onSuccess();
+            }else{
+                if (onFailure != null)
+                    onFailure();
+            }
+        });
+    }else{
+        onFailure();
+    }
+}
+
+function getToken( ){
+    return load( "token");
+}
+
+function getId( ){
+    var token = getToken();
+    var json = JSON.parse( token);
+    return json.id;
+}
+
+function updateUser( onSuccess = null, onFailure = null){
+    send( _api_url + "/user/" + getId());
 }

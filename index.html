@@ -1,44 +1,67 @@
-<html>
-    <head>
-        <title>Blog</title>
-        <div id="scripts_top">
-            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        </div>
-    </head>
-    <body>
-        <header>
-            <nav>
-
-            </nav>
-        </header>
-        <div id=body>
-            <div id="loading">
-                loading
-            </div>
-            <div id="not_logged_in">
+<html lang="fr">
+<head>
+    <title>Blog</title>
+    <div id="scripts_top">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </div>
+    <link rel="stylesheet" href="ressources/css/login.css">
+</head>
+<body>
+    <header>
+        <nav>
+            
+        </nav>
+        <div id="not_logged_in" class="w3-row">
                 <script type="text/javascript">$("#not_logged_in").hide()</script>
-                <form>
-                    <table>
-                        <tr><td>Username :</td><td><input autocomplete="username" id="username" type="text"></td></tr>
-                        <tr><td>Password :</td><td><input autocomplete="password" id="password" type="password"></td></tr>
-                        </table>
-                </form>
-                <button id="login">Login</button>
-                <button id="create">Create a new account</button>
+            <button type="button" class="w3-button" onclick="document.getElementById('login_page').style.display='block'">Se connecter</button>
+            <button type="button" class="w3-button" onclick="document.getElementById('create_page').style.display='block'">Cr&eacute;er un compte</button>
+            <div id="login_page" class="w3-modal w3-display-middle">
+                <div id="form_login" class="w3-col s12 m7 l3 w3-display-container w3-display-middle">
+                    <span onclick="document.getElementById('login_page').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                    <form>
+                        <label for="login_username"><b>Nom d'utilisateur</b></label>
+                        <input autocomplete="username" id="login_username" type="text" placeholder="Entrez le nom d'utilisateur" required>
+                        
+                        <label for="login_password"><b>Mot de passe</b></label>
+                        <input autocomplete="password" id="login_password" type="password" placeholder="Entrez le mot de passe" required>
+                    </form>
+                    <button id="login">Se connecter</button>
+                </div>
             </div>
-            <div id="logged_in">
-                <script type="text/javascript">$("#logged_in").hide()</script>
-                <div id="welcomeMsg"></div>
-                <button id="logout">Logout</button>
+            <div id="create_page" class="w3-modal w3-display-middle">
+                <div id="form_create" class="w3-col s12 m7 l3 w3-display-container w3-display-middle">
+                    <span onclick="document.getElementById('create_page').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                    <form>
+                        <label for="create_username"><b>Nom d'utilisateur</b></label>
+                        <input autocomplete="username" id="create_username" type="text" placeholder="Entrez le nom d'utilisateur" required>
+                        
+                        <label for="create_password"><b>Mot de passe</b></label>
+                        <input autocomplete="password" id="create_password" type="password" placeholder="Entrez le mot de passe" required>
+                        
+                        <label for="create_repeat"><b>Repetez le mot de passe</b></label>
+                        <input autocomplete="password" id="create_repeat" type="password" placeholder="Repetez le mot de passe" required>
+                    </form>
+                    <button id="create">Cr&eacute;er une nouvelle compte</button>
+                </div>
             </div>
         </div>
-        <footer>
-            <div id="scripts_end">
-                <script type="text/javascript" src="ressources/scripts/objects.js"></script>
-                <script type="text/javascript" src="ressources/scripts/utils.js"></script>
-                <script type="text/javascript" src="ressources/scripts/blog_api.js"></script>
-                <script type="text/javascript" src="ressources/scripts/app.js"></script>
-            </div>
-        </footer>
-    </body>
+        <div id="logged_in">
+            <script type="text/javascript">$("#logged_in").hide()</script>
+            <button id="logout" class="w3-button">Se d&eacute;connecter</button>
+            <span id="welcomeMsg"></span>
+        </div>
+    </header>
+    <div id=body>
+
+
+
+        
+    </div>
+    <footer>
+        <script type="text/javascript" src="ressources/scripts/utils.js"></script>
+        <script type="text/javascript" src="ressources/scripts/blog_api.js"></script>
+        <script type="text/javascript" src="ressources/scripts/app.js"></script>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    </footer>
+</body>
 </html>

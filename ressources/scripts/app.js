@@ -1,10 +1,11 @@
 function updateWelcomeMessage( ){
-    $("#welcomeMsg").html( HTMLEncode( "Welcome " + getUsername()));
+    $("#welcomeMsg").html( HTMLEncode( "Connecter en tant que " + getUsername()));
 }
 $("#login").click( function(){
-    username = $("#username").val();
-    password = $("#password").val();
+    username = $("#login_username").val();
+    password = $("#login_password").val();
     login( username, password, function(){
+        document.getElementById('login_page').style.display='none';
         $("#logged_in").show();
         $("#not_logged_in").hide();
         updateWelcomeMessage();
@@ -13,9 +14,10 @@ $("#login").click( function(){
     })
 });
 $("#create").click( function(){
-    username = $("#username").val();
-    password = $("#password").val();
+    username = $("#create_username").val();
+    password = $("#create_password").val();
     createAccount( username, password, function(){
+        document.getElementById('create_page').style.display='none';
         $("#logged_in").show();
         $("#not_logged_in").hide();
         updateWelcomeMessage();
@@ -24,28 +26,22 @@ $("#create").click( function(){
     })
 });
 $("#logout").click( function(){
-    setCookie( "token", null, 0);
-    setCookie( "user", null, 0);
+    logout();
     $("#logged_in").hide();
     $("#not_logged_in").show();
 });
-if (hasToken()){
-    verifyToken( load("token"), function(){
-        $("#loading").hide();
+
+verifyToken( function(){
         $("#logged_in").show();
         $("#not_logged_in").hide();
         updateWelcomeMessage();
-    }, function(){
-        $("#loading").hide();
+    },
+    function(){
         $("#logged_in").hide();
         $("#not_logged_in").show();
-    })
+    }
+);
 
-}else{
-    $("#loading").hide();
-    $("#logged_in").hide();
-    $("#not_logged_in").show();
-}
 
 function getUsername( ){
     var user = load( "user");

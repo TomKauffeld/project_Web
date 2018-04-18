@@ -4,3 +4,4 @@ function send(url,method,data,onready){var xhttp=new XMLHttpRequest();xhttp.onre
 function HTMLEncode(str){var i=str.length,aRet=[];while(i--){var iC=str[i].charCodeAt();if(iC<65||iC>127||(iC>90&&iC<97)){aRet[i]='&#'+iC+';';}else{aRet[i]=str[i];}}return aRet.join('');}
 function store(cname,cvalue){if(typeof(Storage)!=="undefined"){localStorage.setItem(cname,cvalue);}else{setCookie(cname,cvalue,30);}}
 function load(cname){if(typeof(Storage)!=="undefined"){return localStorage.getItem(cname);}else{return getCookie(cname);}}
+function remove(cname){if(typeof(Storage)!=="undefined"){localStorage.removeItem(cname);}else{setCookie(cname,null,0);}}
