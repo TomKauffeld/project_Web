@@ -64,5 +64,59 @@ function getId( ){
 }
 
 function updateUser( onSuccess = null, onFailure = null){
-    send( _api_url + "/user/" + getId());
+    send( _api_url + "/user/" + getId(), "GET", null, function( json){
+        if (json.status == "OK"){
+            store( "user", JSON.stringify( json.user));
+            if (onSuccess != null)
+                onSuccess();
+        }else{
+            if (onFailure != null)
+                onFailure();
+        }
+    });
+}
+
+function getCategories( ){
+    var categories_ids = load( "categories_ids", false);
+    if (!categories_ids)
+        return null;
+    var json_ids = JSON.parse( categories_ids);
+    var categories = new Array( json_ids.lenght);
+    var i = 0;
+    json_ids.categories.forEach( element =>{
+        categories[i] = JSON.parse( load( "category_" + element, false));
+        i++;
+    });
+    return categories;
+}
+
+function getNbCategories( ){
+    var categories_ids = load( "categories_ids", false);
+    if (!categories_ids)
+        return 0;
+    var json_ids = JSON.parse( categories_ids);
+    return json_ids.lenght;
+}
+
+function updateCategories( onSuccess = null, onFailure = null){
+    send( _api_url + "/category", "GET", null, function( json){
+        if (json.status == "OK"){
+            store( "categories_ids", JSON.stringify( json), false);
+            json.categories.forEach(element => {
+                send( _api_url + "/category/" + element, "GET", null, function( json){
+                    if ( json.status == "OK")
+                        store( "category_" + element, JSON.stringify(json.category), false);
+                })
+            });
+            if (onSuccess != null)
+                onSuccess();
+        }else{
+            if (onFailure != null)
+                onFailure();
+        }
+    });
+}
+
+function _updateCategory( onSuccess = null, onFailure = null){
+
 }
