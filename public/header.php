@@ -9,7 +9,8 @@
     <!-- Styles -->
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/header_login.js"></script>
 </head>
 <body>
     <nav class="navbar">
@@ -21,7 +22,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Near from keyboard</a>
+                <a class="navbar-brand" href="index.php">Near from keyboard</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -32,8 +33,9 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Connexion</a></li>
-                    <li><a href="#">Inscription</a></li>
+                    <li                       id="button_login" ><a href="connection" >Connexion   </a></li>
+                    <li                       id="button_create"><a href="inscription">Inscription </a></li>
+                    <li onclick="menu_deco()" id="button_deco"  ><a href="#"          >Deconnection</a></li>
                 </ul>
             </div>
         </div>

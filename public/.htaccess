@@ -1,0 +1,7 @@
+RewriteEngine On
+
+RewriteRule ^connection login.php [NC,L]
+RewriteRule ^inscription create.php [NC,L]
+
+RewriteCond %{HTTPS} off
+RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
