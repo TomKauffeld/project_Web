@@ -2,8 +2,20 @@
 
 require_once __DIR__."/../../sql/SQLConnection.php";
 require_once __DIR__."/../objects/User.php";
+require_once __DIR__."/IdGenerator.php";
 
 class UserDataBase{
+
+    /**
+     * returns the number of entries inside the database
+     * @return int the number of entries
+     */
+    public static function getNb( ){
+        $query = "SELECT COUNT(*) FROM blog_user";
+        SQLConnection::executeQuery( $query);
+        $result = SQLConnection::getResults();
+        return $result[0][0];
+    }
 
     /**
      * generates an id that's not yet used in the database
@@ -11,8 +23,10 @@ class UserDataBase{
      */
     private static function generateId( ){
         $id = "";
+        $i = ceil( UserDataBase::getNb() / IdGenerator::perChar()) + 1;
         do {
-            $id = bin2hex( random_bytes( 50));
+            $id = IdGenerator::create(3, 3+$i);
+            $i++;
         } while (UserDataBase::idExists( $id));
         return $id;
     }

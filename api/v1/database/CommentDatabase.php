@@ -4,8 +4,20 @@ require_once __DIR__."/../objects/Comment.php";
 require_once __DIR__."/../../sql/SQLConnection.php";
 require_once __DIR__."/PostDatabase.php";
 require_once __DIR__."/UserDatabase.php";
+require_once __DIR__."/IdGenerator.php";
 
 class CommentDatabase{
+
+    /**
+     * returns the number of entries inside the database
+     * @return int the number of entries
+     */
+    public static function getNb( ){
+        $query = "SELECT COUNT(*) FROM blog_comment";
+        SQLConnection::executeQuery( $query);
+        $result = SQLConnection::getResults();
+        return $result[0][0];
+    }
 
     /**
      * generates an id that's not yet used in the database
@@ -13,8 +25,10 @@ class CommentDatabase{
      */
     private static function generateId( ){
         $id = "";
+        $i = ceil( CommentDatabase::getNb() / IdGenerator::perChar()) + 1;
         do {
-            $id = bin2hex( random_bytes( 50));
+            $id = IdGenerator::create(3, 3+$i);
+            $i++;
         } while (CommentDatabase::idExists( $id));
         return $id;
     }
