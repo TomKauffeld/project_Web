@@ -8,6 +8,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="ressources/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="ressources/assets/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="ressources/css/login.css">
     <link rel="stylesheet" href="ressources/css/style.css">
 

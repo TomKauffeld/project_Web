@@ -1,49 +1,83 @@
-@import url("https://fonts.googleapis.com/css?family=Unica+One");
+@import url("https://fonts.googleapis.com/css?family=Raleway:400,800");
 body {
   top: 0;
   left: 0;
   margin: 0;
   padding: 0;
-  background-image: url("../images/background.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: fixed;
+  background-color: #f7e7d7;
   color: #fbfbfb;
+  font-family: "Raleway", sans-serif !important;
 }
 body nav.navbar {
   background-color: #30707e;
-  margin-bottom: 350px;
+  margin-bottom: 0px;
+  border-bottom: 3px solid #163d47;
 }
 body nav.navbar a {
-  color: #fbfbfb;
-  font-family: "Unica One", cursive;
-  text-transform: uppercase;
-  font-size: 1.6em;
+  color: #163d47;
+  font-family: "Raleway", sans-serif;
+  font-size: 1.2em;
 }
 body nav.navbar a:hover {
-  color: #163d47;
+  color: #fbfbfb;
   background-color: #30707e;
+}
+body nav.navbar a.navbar-brand {
+  font-weight: 800;
 }
 body nav.navbar .icon-bar {
   background-color: #fbfbfb;
 }
-body .container {
-  box-shadow: 0px 5px 20px 0px #32312d;
-}
-body .container .home-left-article {
+body .banner-home {
+  background-image: url("../images/banner.jpg");
+  background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
   height: 400px;
+  margin-bottom: 50px;
+}
+body main .container {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 50px;
+  border-bottom: 5px solid #163d47;
+  margin-bottom: 50px;
+  background-color: #30707e;
+}
+body main h2 {
+  background-color: #163d47;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-family: "Raleway", sans-serif;
+  font-size: 2em;
+}
+body main .home-article {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  padding: 5px 0px;
 }
-body .container .home-left-article h3 a {
-  font-family: "Unica One", cursive;
-  color: #fbfbfb;
-  font-size: 1.8em;
+body main .home-article > div {
+  width: 50%;
 }
-body .container .home-left-article h3 a:hover {
+body main .home-article .image {
+  background-size: cover;
+  background-position: center center;
+}
+body main .home-article .resume {
+  padding: 30px 10px 30px 20px;
+}
+body main .home-article h3 a {
+  font-family: "Raleway", sans-serif;
+  color: #163d47;
+  font-size: 1.2em;
+}
+body main .home-article h3 a:hover {
   text-decoration: none;
-  color: #4da7b5;
+  color: #163d47;
+}
+body footer {
+  background-color: #30707e;
+  height: 200px;
+  border-top: 3px solid #163d47;
 }
