@@ -78,6 +78,18 @@ body {
                     color: $darkblue;
                 }
             }
+
+            @media screen and (max-width: $break-small) {
+                display:block;
+
+                > div {
+                    width: 100%;
+                }
+
+                .image {
+                    height: 200px;
+                }
+            }
         }
     }
     footer {

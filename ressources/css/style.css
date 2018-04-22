@@ -76,6 +76,17 @@ body main .home-article h3 a:hover {
   text-decoration: none;
   color: #163d47;
 }
+@media screen and (max-width: 768px) {
+  body main .home-article {
+    display: block;
+  }
+  body main .home-article > div {
+    width: 100%;
+  }
+  body main .home-article .image {
+    height: 200px;
+  }
+}
 body footer {
   background-color: #30707e;
   height: 200px;
