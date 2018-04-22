@@ -16,6 +16,16 @@ function _getToken( url, username, password, onSuccess, onFailure){
     });
 }
 
+function getUsername( ){
+    var user = load( "user");
+    if (user.length > 0){
+        json = JSON.parse( user);
+        return json.username;
+    }else{
+        return "";
+    }
+}
+
 function logout(){
     remove( "token");
     remove( "user");
