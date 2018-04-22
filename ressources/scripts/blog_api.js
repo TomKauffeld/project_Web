@@ -127,14 +127,7 @@ function updateCategories( onSuccess = null, onFailure = null){
     send( _api_url + "/category", "GET", null, function( json){
         if (json.status == "OK"){
             store( "categories_ids", JSON.stringify( json), false);
-            json.categories.forEach(element => {
-                send( _api_url + "/category/" + element, "GET", null, function( json){
-                    if ( json.status == "OK")
-                        store( "category_" + element, JSON.stringify(json.category), false);
-                })
-            });
-            if (onSuccess != null)
-                onSuccess();
+            _updateCategory( json.categories, 0, json.length, onSuccess);
         }else{
             if (onFailure != null)
                 onFailure();
@@ -142,6 +135,16 @@ function updateCategories( onSuccess = null, onFailure = null){
     });
 }
 
-function _updateCategory( onSuccess = null, onFailure = null){
-
+function _updateCategory( list, i, max, onSuccess = null, onFailure = null){
+    if (i >= max || list[i] == "undefined" || list[i] == undefined){
+        if (onSuccess != null)
+            onSuccess();
+        return;
+    }
+    console.log( i + "  " + max);
+    send( _api_url + "/category/" + list[i], "GET", null, function( json){
+        if ( json.status == "OK")
+            store( "category_" + list[i], JSON.stringify(json.category), false);
+        _updateCategory( list, i+1, max, onSuccess, onFailure);
+    });
 }
