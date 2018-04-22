@@ -18,8 +18,8 @@ function _getToken( url, username, password, onSuccess, onFailure){
 
 function getUsername( ){
     var user = load( "user");
-    if (user.length > 0){
-        json = JSON.parse( user);
+    if (user.length > 0 && user != "undefined"){
+        var json = JSON.parse( user);
         return json.username;
     }else{
         return "";
@@ -59,7 +59,8 @@ function verifyToken( onSuccess = null, onFailure = null){
             }
         });
     }else{
-        onFailure();
+        if (onFailure != null)
+            onFailure();
     }
 }
 
@@ -69,8 +70,22 @@ function getToken( ){
 
 function getId( ){
     var token = getToken();
-    var json = JSON.parse( token);
-    return json.id;
+    if (token.length > 0 && token != "undefined"){
+        var json = JSON.parse( token);
+        return json.id;
+    }else{
+        return "";
+    }
+}
+
+function getAdminLvL( ){
+    var user = load( "user");
+    if (user.length > 0 && user != "undefined"){
+        var json = JSON.parse( user);
+        return json.adminLvL;
+    }else{
+        return -1;
+    }
 }
 
 function updateUser( onSuccess = null, onFailure = null){

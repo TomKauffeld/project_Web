@@ -19,36 +19,33 @@
 <body>
     <nav class="navbar">
         <div class="container-fluid">
-        <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">Near from keyboard</a>
-        </div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.php">Near from keyboard</a>
+            </div>
 
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li><a href="#">Actualités</a></li>
-                <li><a href="#">Tests</a></li>
-                <li><a href="#">Vidéo</a></li>
-            </ul>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav" id="nav_categories">
+                </ul>
 
-            <ul id="not_logged_in" class="nav navbar-nav navbar-right">
-                <script type="text/javascript">$("#not_logged_in").hide()</script>
-                <li><a href="#" onclick="document.getElementById('login_page').style.display='block'">Se connecter</a></li>
-                <li><a href="#" onclick="document.getElementById('create_page').style.display='block'">Cr&eacute;er un compte</a></li>
-            </ul>
+                <ul id="not_logged_in" class="nav navbar-nav navbar-right">
+                    <script type="text/javascript">$("#not_logged_in").hide()</script>
+                    <li><a href="#" onclick="document.getElementById('login_page').style.display='block'">Se connecter</a></li>
+                    <li><a href="#" onclick="document.getElementById('create_page').style.display='block'">Cr&eacute;er un compte</a></li>
+                </ul>
 
-            <ul id="logged_in" class="nav navbar-nav navbar-right">
-                <script type="text/javascript">$("#logged_in").hide()</script>
+                <ul id="logged_in" class="nav navbar-nav navbar-right">
+                    <script type="text/javascript">$("#logged_in").hide()</script>
 
-                <li><a id="logout" href="#">Se d&eacute;connecter</a></li>
-                <li><a id="welcomeMsg" href="#">Bienvenue utilisateur</a></li>
+                    <li><a id="logout" href="#">Se d&eacute;connecter</a></li>
+                    <li><a id="welcomeMsg" href="#">Bienvenue utilisateur</a></li>
 
-            </ul>
+                </ul>
             </div>
         </div>
     </nav>

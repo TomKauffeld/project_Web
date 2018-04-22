@@ -52,3 +52,11 @@ $(document).ready( function( ){
         $("#not_logged_in").show();
     });
 });
+updateCategories( function( ){
+    $(document).ready( function( ){
+        var categories = getCategories();
+        categories.forEach(category => {
+            $("#nav_categories").append( '<li><a href="#">'+ category.name + '</a></li>');
+        });
+    });
+});
