@@ -1,5 +1,6 @@
 <?php
 header('Content-Type: application/json');
+header( "Access-Control-Allow-Origin: *");
 require_once __DIR__."/../managers/TokenManagement.php";
 require_once __DIR__."/../managers/UserManagement.php";
 require_once __DIR__."/../objects/User.php";
