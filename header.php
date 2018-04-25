@@ -7,8 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="ressources/assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="ressources/assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/solid.css" integrity="sha384-HTDlLIcgXajNzMJv5hiW5s2fwegQng6Hi+fN6t5VAcwO/9qbg2YEANIyKBlqLsiT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/regular.css" integrity="sha384-R7FIq3bpFaYzR4ogOiz75MKHyuVK0iHja8gmH1DHlZSq4tT/78gKAa7nl4PJD7GP" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/fontawesome.css" integrity="sha384-8WwquHbb2jqa7gKWSoAwbJBV2Q+/rQRss9UXL5wlvXOZfSodONmVnifo/+5xJIWX" crossorigin="anonymous">
+
+
     <link rel="stylesheet" href="ressources/css/login.css">
     <link rel="stylesheet" href="ressources/css/style.css">
 
@@ -32,6 +36,26 @@
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav" id="nav_categories">
+                    <?php
+                        $url = "https://pubflare.ovh/school/blog/api/latest/category/";
+                        $options = array( 
+                            "http" => array( 
+                                "header"  => "Content-Type: application/x-www-form-urlencoded\r\n",
+                                "method"  => "GET"
+                            )
+                        );
+                        $context = stream_context_create( $options);
+                        $result = file_get_contents($url, false, $context);
+                        $json = json_decode( $result, true);
+                        if ($json["status"] == "OK"){
+                            foreach ($json["categories"] as $id ) {
+                                $result = file_get_contents( $url.$id, false, $context);
+                                $category = json_decode( $result, true);
+                                echo '<li><a href="#">'.htmlspecialchars($category["category"]["name"]);
+                                echo '</a></li>';
+                            }
+                        }
+                    ?>
                 </ul>
 
                 <ul id="not_logged_in" class="nav navbar-nav navbar-right">
