@@ -141,7 +141,6 @@ function _updateCategory( list, i, max, onSuccess = null, onFailure = null){
             onSuccess();
         return;
     }
-    console.log( i + "  " + max);
     send( _api_url + "/category/" + list[i], "GET", null, function( json){
         if ( json.status == "OK")
             store( "category_" + list[i], JSON.stringify(json.category), false);
