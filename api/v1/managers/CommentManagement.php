@@ -70,7 +70,7 @@ class CommentManagement{
      */
     public static function createNew( array $token, string $post, string $body){
         $user = TokenManagement::checkTokenJson( $token);
-        if ($user != null){
+        if ($user != null && $user["status"] == "OK"){
             $comment = CommentDatabase::createNew( $token["id"], $post, $body);
             if ($comment == null){
                 return array( "status" => "ERROR", "error" => "INVALID POST", "version" => "v1");

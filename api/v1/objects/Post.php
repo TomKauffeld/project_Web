@@ -10,7 +10,7 @@ class Post implements JsonSerializable{
      * @var string $body the body of the post
      * @var array $categories the categories of the post
      */
-    protected $id, $title, $time, $author, $body, $categories;
+    protected $id, $title, $time, $author, $body, $categories, $image;
 
     /**
      * contructor
@@ -20,13 +20,18 @@ class Post implements JsonSerializable{
      * @param string $body the body of the post
      * @param int $time when it was posted (unix time stamp)
      */
-    public function __construct( string $id, string $author, array $categories, string $title, string $body, int $time){
+    public function __construct( string $id, string $author, array $categories, string $title, string $body, int $time, string $image = null){
         $this->id = $id;
         $this->author = $author;
         $this->title = $title;
         $this->body = $body;
         $this->time = $time;
         $this->categories = $categories;
+        $this->image = $image;
+    }
+
+    public function getImage( ){
+        return $this->image;
     }
 
     /**
@@ -98,7 +103,8 @@ class Post implements JsonSerializable{
             "categories" => $this->getCategories(),
             "title" => $this->getTitle(),
             "body" => $this->getBody(),
-            "time" => $this->getTime()
+            "time" => $this->getTime(),
+            "image" => $this->getImage()
         ];
     }
 }

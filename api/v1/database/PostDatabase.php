@@ -55,11 +55,11 @@ class PostDatabase{
      * @return Post|NULL the post if id the id exists, null otherwise
      */
     public static function get( string $id){
-        $query = "SELECT id, author, title, body, time FROM blog_post WHERE id=:id";
+        $query = "SELECT id, author, title, body, time, image FROM blog_post WHERE id=:id";
         SQLConnection::executeQuery( $query, array( ":id" => array( $id, PDO::PARAM_INT)));
         $result = SQLConnection::getResults();
         if (isset( $result[0]["id"])){
-            $post =  new Post( $result[0]["id"], $result[0]["author"], array(), $result[0]["title"], $result[0]["body"], $result[0]["time"]);
+            $post =  new Post( $result[0]["id"], $result[0]["author"], array(), $result[0]["title"], $result[0]["body"], $result[0]["time"], $result[0]["image"]);
             $query = "SELECT category FROM blog_post_category WHERE post=:id";
             SQLConnection::executeQuery( $query, array( ":id" => array( $id, PDO::PARAM_INT)));
             $result = SQLConnection::getResults();
@@ -143,7 +143,7 @@ class PostDatabase{
      * @param string $body the body of the post
      * @return Post|NULL returns the post if successfull, null otherwise
      */
-    public static function createNew( string $author, array $categories, string $title, string $body){
+    public static function createNew( string $author, array $categories, string $title, string $body, string $image = null){
         if (count( $categories) <= 0){
             return null;
         }
@@ -157,14 +157,27 @@ class PostDatabase{
         }
         if (UserDataBase::idExists( $author)){
             $id = PostDatabase::generateId();
-            $query = "INSERT INTO blog_post ( id, author, title, body, time) VALUES( :id, :author, :title, :body, :time)";
-            $val = SQLConnection::executeQuery( $query, array(
-                ":id" => array( $id, PDO::PARAM_STR),
-                ":author" => array( $author, PDO::PARAM_STR),
-                ":title" => array( $title, PDO::PARAM_STR),
-                ":body" => array( $body, PDO::PARAM_STR),
-                ":time" => array( time(), PDO::PARAM_INT)
-            ));
+            $val = true;
+            if ($image != null){
+                $query = "INSERT INTO blog_post ( id, author, title, body, time, image) VALUES( :id, :author, :title, :body, :time, :image)";
+                $val = SQLConnection::executeQuery( $query, array(
+                    ":id" => array( $id, PDO::PARAM_STR),
+                    ":author" => array( $author, PDO::PARAM_STR),
+                    ":title" => array( $title, PDO::PARAM_STR),
+                    ":body" => array( $body, PDO::PARAM_STR),
+                    ":time" => array( time(), PDO::PARAM_INT),
+                    ":image" => array( $image, PDO::PARAM_STR)
+                ));
+            }else{
+                $query = "INSERT INTO blog_post ( id, author, title, body, time) VALUES( :id, :author, :title, :body, :time)";
+                $val = SQLConnection::executeQuery( $query, array(
+                    ":id" => array( $id, PDO::PARAM_STR),
+                    ":author" => array( $author, PDO::PARAM_STR),
+                    ":title" => array( $title, PDO::PARAM_STR),
+                    ":body" => array( $body, PDO::PARAM_STR),
+                    ":time" => array( time(), PDO::PARAM_INT)
+                ));
+            }
             $query = "INSERT INTO blog_post_category (post, category) VALUES( :post, :category)";
             foreach( $categories as $category){
                 $val = $val && SQLConnection::executeQuery( $query, array(

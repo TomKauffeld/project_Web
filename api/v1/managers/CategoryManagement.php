@@ -56,7 +56,8 @@ class CategoryManagement{
      */
     public static function changeName( array $token, string $id, string $name){
         $user = TokenManagement::checkTokenJson( $token);
-        if ($user != null){
+        if ($user != null && $user["status"] == "OK"){
+            $user = $user["user"];
             if ($user->getAdminLvL() >= 2){
                 $category = CategoryDatabase::changeName( $id, $name);
                 if ($category == null){

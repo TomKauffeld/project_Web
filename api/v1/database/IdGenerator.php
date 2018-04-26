@@ -21,8 +21,8 @@ class IdGenerator{
         $times = random_int( max( $minLenght, 0), min( $maxLenght, 200));
         $string = "";
         while (strlen( $string) < $times){
-            $random = random_int( 0, count( $charArr-1));
-            $string .= $charArr[$random];
+            $random = random_int( 0, count( IdGenerator::$charArr)-1);
+            $string .= IdGenerator::$charArr[$random];
         }
         return $string;
     }
@@ -32,7 +32,7 @@ class IdGenerator{
      * @return int
      */
     public static function perChar( ){
-        return count( $charArr);
+        return count( IdGenerator::$charArr);
     }
     
 }
