@@ -89,6 +89,7 @@ body main .home-article h3 a:hover {
 }
 body footer {
   background-color: #30707e;
-  height: 200px;
   border-top: 3px solid #163d47;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
