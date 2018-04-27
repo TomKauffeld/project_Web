@@ -1,0 +1,46 @@
+@import '../../ressources/scss/variables';
+body {
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    background-color: $creme;
+    color: $black;
+    font-family: 'Raleway', sans-serif !important;
+    .nav-admin {
+        background-color: $blue;
+        height: 100vh;
+        border-right: 3px solid $darkblue;
+        ul {
+            margin: 0;
+            margin-top: 50px;
+            padding: 0;
+            list-style: none;
+            li {
+                margin: 5px 0px;
+                a {
+                    color: $darkblue;
+                    padding: 5px 0px;
+                    font-size: 1.5em;
+                    &:hover {
+                        color: $white;
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+        .retour-blog {
+            position: absolute;
+            bottom: 10px;
+            a {
+                color: $darkblue;
+                font-size: 1.3em;
+                &:hover {
+                    color: $white;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+    main {}
+}
