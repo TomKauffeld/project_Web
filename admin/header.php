@@ -40,3 +40,5 @@
                 <a href=".."><i class="fa fa-sign-out"></i> Retour au blog</a>
             </p>
         </nav>
+
+        <main class="col-md-9 col-lg-10">

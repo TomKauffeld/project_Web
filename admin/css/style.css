@@ -42,3 +42,9 @@ body .nav-admin .retour-blog a:hover {
   color: #fbfbfb;
   text-decoration: none;
 }
+body main .icon-edit {
+  color: #30707e;
+}
+body main .icon-delete {
+  color: #e74c3c;
+}

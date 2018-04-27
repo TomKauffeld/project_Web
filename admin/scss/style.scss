@@ -42,5 +42,12 @@ body {
             }
         }
     }
-    main {}
+    main {
+        .icon-edit {
+            color: $blue;
+        }
+        .icon-delete {
+            color: #e74c3c;
+        }
+    }
 }
