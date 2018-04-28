@@ -1,7 +1,7 @@
 <?php include __DIR__."/header.php";?>
 
-<script type="text/javascript" src="ressources/scripts/page_create_post.js"></script>
-<?php echo __DIR__ ?>
+<script type="text/javascript" src="./scripts/page_create_post.js"></script>
+<?php //echo __DIR__ ?>
 <div id="create_post">
     <script type"text/javascript">$("#create_post").hide();</script>
     <form style="color:black" action="#" method="POST">
