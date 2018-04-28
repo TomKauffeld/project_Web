@@ -23,43 +23,43 @@
       <td>Lorem ipsum sin dolor amet</td>
       <td>Julie Latieule</td>
       <td>Publié le 27/04/2018</td>
-      <td><i class="fa fa-pencil"></i></td>
-      <td><i class="fa fa-times"></i>
+      <td><a href="#" alt="Modifier l'article" class="icon-edit"><i class="fa fa-pencil"></i></a></td>
+      <td><a href="#" alt="Supprimer l'article" class="icon-delete"><i class="fa fa-times"></i></a></td>
     </tr>
     <tr>
       <td>Lorem ipsum sin dolor amet</td>
       <td>Julie Latieule</td>
       <td>Publié le 27/04/2018</td>
-      <td><i class="fa fa-pencil"></i></td>
-      <td><i class="fa fa-times"></i>
+      <td><a href="#" alt="Modifier l'article" class="icon-edit"><i class="fa fa-pencil"></i></a></td>
+      <td><a href="#" alt="Supprimer l'article" class="icon-delete"><i class="fa fa-times"></i></a></td>
     </tr>
     <tr>
       <td>Lorem ipsum sin dolor amet</td>
       <td>Julie Latieule</td>
       <td>Publié le 27/04/2018</td>
-      <td><i class="fa fa-pencil"></i></td>
-      <td><i class="fa fa-times"></i>
+      <td><a href="#" alt="Modifier l'article" class="icon-edit"><i class="fa fa-pencil"></i></a></td>
+      <td><a href="#" alt="Supprimer l'article" class="icon-delete"><i class="fa fa-times"></i></a></td>
     </tr>
     <tr>
       <td>Lorem ipsum sin dolor amet</td>
       <td>Julie Latieule</td>
       <td>Publié le 27/04/2018</td>
-      <td><i class="fa fa-pencil"></i></td>
-      <td><i class="fa fa-times"></i>
+      <td><a href="#" alt="Modifier l'article" class="icon-edit"><i class="fa fa-pencil"></i></a></td>
+      <td><a href="#" alt="Supprimer l'article" class="icon-delete"><i class="fa fa-times"></i></a></td>
     </tr>
     <tr>
       <td>Lorem ipsum sin dolor amet</td>
       <td>Julie Latieule</td>
       <td>Publié le 27/04/2018</td>
-      <td><i class="fa fa-pencil"></i></td>
-      <td><i class="fa fa-times"></i>
+      <td><a href="#" alt="Modifier l'article" class="icon-edit"><i class="fa fa-pencil"></i></a></td>
+      <td><a href="#" alt="Supprimer l'article" class="icon-delete"><i class="fa fa-times"></i></a></td>
     </tr>
     <tr>
       <td>Lorem ipsum sin dolor amet</td>
       <td>Julie Latieule</td>
       <td>Publié le 27/04/2018</td>
-      <td><i class="fa fa-pencil"></i></td>
-      <td><i class="fa fa-times"></i>
+      <td><a href="#" alt="Modifier l'article" class="icon-edit"><i class="fa fa-pencil"></i></a></td>
+      <td><a href="#" alt="Supprimer l'article" class="icon-delete"><i class="fa fa-times"></i></a></td>
     </tr>
   </tbody>
 </table> 
