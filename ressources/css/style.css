@@ -36,6 +36,13 @@ body .banner-home {
   height: 400px;
   margin-bottom: 50px;
 }
+body .banner-article {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  height: 400px;
+  margin-bottom: 50px;
+}
 body main .container {
   padding-top: 0px;
   padding-bottom: 0px;
@@ -85,6 +92,14 @@ body main .home-article h3 a:hover {
   }
   body main .home-article .image {
     height: 200px;
+  }
+}
+body main .content-article {
+  padding: 50px 100px;
+}
+@media screen and (max-width: 768px) {
+  body main .content-article {
+    padding: 50px 10px;
   }
 }
 body footer {
