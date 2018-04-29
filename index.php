@@ -40,9 +40,9 @@ date_default_timezone_set(timezone_name_from_abbr("", $offset*60, false));
                     echo '<h3><a href="#">'.htmlspecialchars($post["title"]).'</a></h3>';
                     echo '<p>'.htmlspecialchars( $post["body"])."</p>";
                     echo "<div class='row'>";
-                    echo '<div class="col-md-6"><i class="fas fa-calendar-alt"></i> Publié le '.date( "d/m/y", $post["time"]).'</div>';
-                    echo '<div class="col-md-6"><i class="fas fa-pencil-alt"></i> Auteur : <a href="#">Julie Latieule</a></div>';
-                    echo '<div class="col-xs-12"><i class="far fa-comments"></i> '.htmlspecialchars( $post["comments"]).' commentaires</div>';
+                    echo '<div class="col-md-6"><i class="fa fa-calendar"></i> Publié le '.date( "d/m/y", $post["time"]).'</div>';
+                    echo '<div class="col-md-6"><i class="fa fa-pencil"></i> Auteur : <a href="#">Julie Latieule</a></div>';
+                    echo '<div class="col-xs-12"><i class="fa fa-comments"></i> '.htmlspecialchars( $post["comments"]).' commentaires</div>';
                     echo '</div></div></div>';
                 }
         
