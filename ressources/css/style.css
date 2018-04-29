@@ -102,6 +102,26 @@ body main .content-article {
     padding: 50px 10px;
   }
 }
+body main .content-article a {
+  color: #4da7b5;
+}
+body main .content-article a:hover {
+  text-decoration: none;
+  color: #163d47;
+}
+body main .comments .comment {
+  border-bottom: 2px solid #163d47;
+}
+body main .comments .comment h5 {
+  font-family: "Raleway", sans-serif;
+}
+body main .comments .comment h5 a {
+  color: #4da7b5;
+}
+body main .comments .comment h5 a:hover {
+  text-decoration: none;
+  color: #163d47;
+}
 body footer {
   background-color: #30707e;
   border-top: 3px solid #163d47;

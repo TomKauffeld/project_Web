@@ -34,5 +34,31 @@
 
         
     </div>
+
+    <div class="container">
+        <div class="row">
+            <h2 class="col-xs-12">Commentaires</h2>
+        </div>
+
+        <div class="row comments">
+            <div class="col-xs-12 comment">
+                <h5><a href="#">Julie Latieule</a> a écrit :</h5>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porta id mi ac finibus. Curabitur ut eros id ante lobortis iaculis. Suspendisse vulputate, urna ullamcorper euismod mollis, libero mauris commodo leo, in bibendum diam felis eget justo. Curabitur aliquet malesuada augue quis suscipit. Integer diam nisi, consequat vel tincidunt a, vehicula a odio. Donec sit amet nulla a nunc accumsan dignissim. Vivamus vitae tincidunt orci. Nullam fringilla lorem non urna fringilla, a mattis eros sollicitudin.</p>
+            </div>
+
+            <div class="col-xs-12 comment">
+                <h5><a href="#">Admin</a> a écrit :</h5>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porta id mi ac finibus. Curabitur ut eros id ante lobortis iaculis. Suspendisse vulputate, urna ullamcorper euismod mollis, libero mauris commodo leo, in bibendum diam felis eget justo. Curabitur aliquet malesuada augue quis suscipit. Integer diam nisi, consequat vel tincidunt a, vehicula a odio. Donec sit amet nulla a nunc accumsan dignissim. Vivamus vitae tincidunt orci. Nullam fringilla lorem non urna fringilla, a mattis eros sollicitudin.</p>
+            </div>
+
+            <div class="col-xs-12 comment">
+                <h5><a href="#">Un utilisateur</a> a écrit :</h5>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porta id mi ac finibus. Curabitur ut eros id ante lobortis iaculis. Suspendisse vulputate, urna ullamcorper euismod mollis, libero mauris commodo leo, in bibendum diam felis eget justo. Curabitur aliquet malesuada augue quis suscipit. Integer diam nisi, consequat vel tincidunt a, vehicula a odio. Donec sit amet nulla a nunc accumsan dignissim. Vivamus vitae tincidunt orci. Nullam fringilla lorem non urna fringilla, a mattis eros sollicitudin.</p>
+            </div>
+            
+        </div>
+
+        
+    </div>
 </main>
 <?php include('footer.php'); ?>
