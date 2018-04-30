@@ -7,12 +7,9 @@
 
 <div class="banner-article" style="background-image: url('./ressources/images/mariokart8.jpg')"></div> <!-- Image d'en-tête de l'article -->
 
-<main>
+<main class="categorie">
 
     <div class="container">
-        <div class="row">
-            <h2 class="col-xs-12">Titre de l'article</h2>
-        </div>
 
         <div class="row">
             <div class="col-xs-12 content-article">
