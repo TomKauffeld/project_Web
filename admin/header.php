@@ -12,9 +12,8 @@
     <link rel="stylesheet" href="./css/style.css">
     
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!--<script type="text/javascript" src="ressources/scripts/utils.js"></script>
-    <script type="text/javascript" src="ressources/scripts/blog_api.js"></script>
-    <script type="text/javascript" src="ressources/scripts/page_header.js"></script>-->
+    <script type="text/javascript" src="../ressources/scripts/utils.js"></script>
+    <script type="text/javascript" src="../ressources/scripts/blog_api.js"></script>
     <script type="text/javascript">
         var time_offset = getCookie( "time_offset");
         var timezone_offset_minutes = new Date().getTimezoneOffset();
