@@ -82,7 +82,7 @@ class PostManagement{
      */
     public static function createNew( array $token, array $categories, string $title, string $body, string $type = null, string $base64 = null){
         $user = TokenManagement::checkTokenJson( $token);
-        if ($user != null){
+        if ($user != null && $user["status"] == "OK"){
             $user = $user["user"];
             if ($user->getAdminLvL() >= 1){
                 if (count( $categories) <= 0 || count(array_unique($categories))<count($categories)){

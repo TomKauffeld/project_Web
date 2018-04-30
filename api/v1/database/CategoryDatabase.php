@@ -36,11 +36,11 @@ class CategoryDatabase{
      * @return Category|NULL the category if it exists, null otherwise
      */
     public static function get( string $id){
-        $query = "SELECT id, name, description FROM blog_category WHERE id=:id";
+        $query = "SELECT id, name FROM blog_category WHERE id=:id";
         SQLConnection::executeQuery( $query, array( ":id" => array( $id, PDO::PARAM_STR)));
         $result = SQLConnection::getResults();
         if (isset( $result[0]["id"])){
-            return new Category( $result[0]["id"], $result[0]["name"], $result[0]["description"]);
+            return new Category( $result[0]["id"], $result[0]["name"]);
         }else{
             return null;
         }
@@ -64,19 +64,17 @@ class CategoryDatabase{
     /**
      * creates a new category
      * @param string $name the name of the new category
-     * @param string $description the description of the new category
      * @return Category|NULL the category created if successfull, null otherwise
      */
-    public static function createNew( string $name, string $description){
+    public static function createNew( string $name){
         if (CategoryDatabase::nameExists( $name)){
             return null;
         }else{
             $id = CategoryDatabase::generateId();
-            $query = "INSERT INTO blog_category ( id, name, description) VALUES( :id, :name, :description)";
+            $query = "INSERT INTO blog_category ( id, name) VALUES( :id, :name)";
             SQLConnection::executeQuery( $query, array(
                 ":id" => array( $id, PDO::PARAM_STR),
-                ":name" => array( $name, PDO::PARAM_STR),
-                ":description" => array( $description, PDO::PARAM_STR)
+                ":name" => array( $name, PDO::PARAM_STR)
             ));
             return CategoryDatabase::get( $id);
         }
