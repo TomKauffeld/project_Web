@@ -84,6 +84,13 @@ body {
                     color: $darkblue;
                 }
             }
+            a {
+                color: $lightblue;
+                &:hover {
+                    color: $darkblue;
+                    text-decoration: none;
+                }
+            }
             @media screen and (max-width: $break-small) {
                 display: block;
                 >div {

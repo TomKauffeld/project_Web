@@ -83,6 +83,13 @@ body main .home-article h3 a:hover {
   text-decoration: none;
   color: #163d47;
 }
+body main .home-article a {
+  color: #4da7b5;
+}
+body main .home-article a:hover {
+  color: #163d47;
+  text-decoration: none;
+}
 @media screen and (max-width: 768px) {
   body main .home-article {
     display: block;
