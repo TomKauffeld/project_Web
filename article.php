@@ -10,7 +10,9 @@
 <main class="categorie">
 
     <div class="container">
-
+        <div class="row">
+            <h2 class="col-xs-12">Titre de l'article</h2>
+        </div>
         <div class="row">
             <div class="col-xs-12 content-article">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porta id mi ac finibus. Curabitur ut eros id ante lobortis iaculis. Suspendisse vulputate, urna ullamcorper euismod mollis, libero mauris commodo leo, in bibendum diam felis eget justo. Curabitur aliquet malesuada augue quis suscipit. Integer diam nisi, consequat vel tincidunt a, vehicula a odio. Donec sit amet nulla a nunc accumsan dignissim. Vivamus vitae tincidunt orci. Nullam fringilla lorem non urna fringilla, a mattis eros sollicitudin.</p>
