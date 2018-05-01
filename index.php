@@ -11,37 +11,32 @@ date_default_timezone_set(timezone_name_from_abbr("", $offset*60, false));
             <h2 class="col-xs-12">Les derniers articles</h2>
         </div>
         <?php
-            $url = "https://pubflare.ovh/school/blog/api/latest/post/";
-            $options = array( 
-                "http" => array( 
-                    "header"  => "Content-Type: application/x-www-form-urlencoded\r\n",
-                    "method"  => "GET"
-                    )
-                );
-                $context = stream_context_create( $options);
-                $result = file_get_contents($url."?limit=3", false, $context);
+                $result = file_get_contents($url."post?limit=3", false, $context);
                 $json = json_decode( $result, true);
                 $posts = array();
                 if ($json["status"] == "OK"){
                     foreach ($json["posts"] as $id ) {
-                        $result = file_get_contents( $url.$id, false, $context);
+                        $result = file_get_contents( $url."post/".$id, false, $context);
                         $post = json_decode( $result, true);
-                        $result = file_get_contents( $url.$id."/comments/", false, $context);
+                        $result = file_get_contents( $url."post/".$id."/comments/", false, $context);
                         $comments = json_decode( $result, true);
                         $posts[$post["post"]["id"]] = $post["post"];
                         $posts[$post["post"]["id"]]["comments"] = $comments["lenght"];
                     }
                 }
-                $url = "https://pubflare.ovh/school/blog/api/image/";
+                $urlImage = "https://pubflare.ovh/school/blog/api/image/";
                 foreach ($posts as $id => $post) {
+                    $result = file_get_contents($url."user/".$post["author"], false, $context);
+                    $user = json_decode( $result, true);
+                    $user = $user["user"];
                     echo '<div class="row home-article">';
-                    echo '<div class="image" style="background-image: url(\''.$url.$post["image"].'\')"></div>';
+                    echo '<div class="image" style="background-image: url(\''.$urlImage.$post["image"].'\')"></div>';
                     echo '<div class="resume">';
-                    echo '<h3><a href="#">'.htmlspecialchars($post["title"]).'</a></h3>';
+                    echo '<h3><a href="article.php?p='.htmlspecialchars($id).'">'.htmlspecialchars($post["title"]).'</a></h3>';
                     echo '<p>'.htmlspecialchars( $post["body"])."</p>";
                     echo "<div class='row'>";
                     echo '<div class="col-md-6"><i class="fa fa-calendar"></i> Publié le '.date( "d/m/y", $post["time"]).'</div>';
-                    echo '<div class="col-md-6"><i class="fa fa-pencil"></i> Auteur : <a href="#">Julie Latieule</a></div>';
+                    echo '<div class="col-md-6"><i class="fa fa-pencil"></i> Auteur : <a href="profil.php?u='.htmlspecialchars($user["id"]).'">'.htmlspecialchars($user["username"]).'</a></div>';
                     echo '<div class="col-xs-12"><i class="fa fa-comments"></i> '.htmlspecialchars( $post["comments"]).' commentaires</div>';
                     echo '</div></div></div>';
                 }

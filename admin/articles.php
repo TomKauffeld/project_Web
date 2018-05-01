@@ -1,6 +1,6 @@
 <?php include('header.php') ; ?>
 
-<script type="text/javascript" src="js/page_articles.js"></script>
+<script type="text/javascript" src="scripts/page_articles.js"></script>
 <h2>Gestion des articles <a class="btn btn-primary" href="create_post.php">Ajouter un nouvel article</a></h2>
 <table class="table table-striped table-hover ">
   <thead>

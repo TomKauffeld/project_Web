@@ -1,23 +1,4 @@
-<?php
-$url = "https://pubflare.ovh/school/blog/api/latest/category/";
-$options = array( 
-    "http" => array( 
-        "header"  => "Content-Type: application/x-www-form-urlencoded\r\n",
-        "method"  => "GET"
-        )
-    );
-    $context = stream_context_create( $options);
-    $result = file_get_contents($url, false, $context);
-    $json = json_decode( $result, true);
-    $categories = array();
-    if ($json["status"] == "OK"){
-        foreach ($json["categories"] as $id ) {
-            $result = file_get_contents( $url.$id, false, $context);
-            $category = json_decode( $result, true);
-            $categories[$category["category"]["id"]] = $category["category"];
-        }
-    }
-?>
+<?php require_once __DIR__."/ressources/scripts/blog_api.php";?>
     
     
 <!doctype html>
@@ -67,7 +48,7 @@ $options = array(
                 <ul class="nav navbar-nav" id="nav_categories">
                     <?php
                         foreach ($categories as $key => $value) {
-                            echo '<li><a href="#">'.htmlspecialchars($value["name"]).'</a></li>';
+                            echo '<li><a href="categorie.php?c='.htmlentities($key).'">'.htmlspecialchars($value["name"]).'</a></li>';
                         }
                     ?>
                 </ul>

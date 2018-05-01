@@ -1,3 +1,5 @@
+<?php require_once __DIR__."/../ressources/scripts/blog_api.php";?>
+
 <!doctype html>
 <html lang="fr">
 <head>

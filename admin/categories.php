@@ -1,6 +1,6 @@
 <?php include('header.php'); ?>
 
-<script type="text/javascript" src="js/page_categories.js"></script>
+<script type="text/javascript" src="scripts/page_categories.js"></script>
 <h2>Catégories d'articles</h2>
 <h3>Ajouter une nouvelle catégorie</h3>
     <form>
@@ -15,8 +15,8 @@
         <tr>
             <th>Nom de la catégorie</th>
             <th>Nombre d'articles</th>
-            <th>Modifier</th>
-            <th>Supprimer</th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody id="list_categories">

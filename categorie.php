@@ -3,6 +3,11 @@
 
     $offset = isset( $_COOKIE["time_offset"]) ? $_COOKIE["time_offset"] : 0;
     date_default_timezone_set(timezone_name_from_abbr("", $offset*60, false));
+
+    $id = isset( $_GET["c"]) ? $_GET["c"] : "NON_DEFINIE";
+    $result = file_get_contents($url."category/".$id, false, $context);
+    $json = json_decode( $result, true);
+    $category = $json["category"];
 ?>
 
 <main>
@@ -10,7 +15,7 @@
 
     <div class="container">
         <div class="row">
-            <h2 class="col-xs-12">Nom de la catégorie</h2>
+            <h2 class="col-xs-12"><?php echo htmlspecialchars($category["name"]); ?></h2>
         </div>
 
         <div class="row home-article">

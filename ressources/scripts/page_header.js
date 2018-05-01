@@ -1,6 +1,7 @@
 
 function updateWelcomeMessage( ){
     $("#welcomeMsg").html( HTMLEncode( "Bienvenue " + getUsername()));
+    $("#welcomeMsg").attr( "href", "profil.php?u=" + getId());
 }
 
 verifyToken( 

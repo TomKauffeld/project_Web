@@ -21,6 +21,7 @@ function getBase64( file){
 
 $(document).ready( function(){
     $("#form_post_button").click( function( ){
+        
         var promise = getBase64( document.getElementById( "form_post_image").files[0]);
         promise.then( function( result){
             var sendData = {
@@ -31,9 +32,13 @@ $(document).ready( function(){
                 "token": JSON.parse(getToken()),
                 "categories": $("#form_post_categories").val()
             }
-            sendString = JSON.stringify( sendData);
+            var sendString = JSON.stringify( sendData);
             send( "https://pubflare.ovh/school/blog/api/latest/post", "POST", sendString, function( json){
-                alert( JSON.stringify( json));
+                if (json.status == "OK"){
+                    location.assign( "index.php");
+                }else{
+                    alert( json.error);
+                }
             });
         });
     });
