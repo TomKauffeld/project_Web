@@ -5,6 +5,7 @@ require_once __DIR__."/../database/PostDatabase.php";
 require_once __DIR__."/../objects/Post.php";
 require_once __DIR__."/TokenManagement.php";
 require_once __DIR__."/../objects/User.php";
+require_once __DIR__."/../database/IdGenerator.php";
 
 class PostManagement{
 
@@ -79,11 +80,27 @@ class PostManagement{
      * @param string $body the body of the post
      * @return array the response
      */
-    public static function createNew( array $token, array $categories, string $title, string $body){
+    public static function createNew( array $token, array $categories, string $title, string $body, string $type = null, string $base64 = null){
         $user = TokenManagement::checkTokenJson( $token);
-        if ($user != null){
-            if ($user["adminLvL"] >= 1){
-                $post = PostDatabase::createNew( $user["id"], $categories, $title, $body);
+        if ($user != null && $user["status"] == "OK"){
+            $user = $user["user"];
+            if ($user->getAdminLvL() >= 1){
+                if (count( $categories) <= 0 || count(array_unique($categories))<count($categories)){
+                    return array( "status" => "ERROR", "error" => "CATEGORIES NOT CORRECT", "version" => "v1");
+                }
+                foreach ($categories as $category) {
+                    if (!CategoryDatabase::idExists( $category)){
+                        return array( "status" => "ERROR", "error" => "CATEGORIES NOT CORRECT", "version" => "v1");
+                    }
+                }
+                $post = null;
+                if ($type != null){
+                    $imageId = IdGenerator::create( 5, 20);
+                    file_put_contents( "/home/pubflarerd/www/website/school/blog/api/image/".$imageId.".".$type, base64_decode( $base64));
+                    $post = PostDatabase::createNew( $token["id"], $categories, $title, $body, $imageId.".".$type);
+                }else{
+                    $post = PostDatabase::createNew( $token["id"], $categories, $title, $body);
+                }
                 if ($post == null){
                     return array( "status" => "ERROR", "error" => "CATEGORIES NOT CORRECT", "version" => "v1");
                 }else{

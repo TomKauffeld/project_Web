@@ -1,5 +1,6 @@
 <?php
 header('Content-Type: application/json');
+header( "Access-Control-Allow-Origin: *");
 require_once __DIR__."/../managers/CategoryManagement.php";
 
 $method = $_SERVER['REQUEST_METHOD'];
@@ -10,9 +11,9 @@ switch ($method){
         $lenght = count( $url_arr);
         $i = array_search( "api", $url_arr);
         if (($i+3 == $lenght || $i+4 == $lenght) && !(isset( $url_arr[$i+3]) && strlen( $url_arr[$i+3]) > 0)){
-            if (isset( $request["token"]) && isset( $request["name"]) && isset( $request["description"])){
+            if (isset( $request["token"]) && isset( $request["name"])){
                 if (((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443)){
-                    $response = CategoryManagement::createNew( $request["token"], $request["name"], $request["description"]);
+                    $response = CategoryManagement::createNew( $request["token"], $request["name"]);
                     if ($response["status"] == "ERROR"){
                         if ($response["error"] == "INVALID TOKEN"){
                             http_response_code( 401);

@@ -5,20 +5,17 @@ class Category implements JsonSerializable{
     /**
      * @var string $id the id of the category
      * @var string $name the name of the category
-     * @var string $description the description of the category
      */
-    private $id, $name, $description;
+    private $id, $name;
 
     /**
      * contructor
      * @param string $id the id of the category
      * @param string $name the name of the category
-     * @param string $description the description of the category
      */
-    public function __construct( string $id, string $name, string $description){
+    public function __construct( string $id, string $name){
         $this->id = $id;
         $this->name = $name;
-        $this->description = $description;
     }
 
     /**
@@ -38,14 +35,6 @@ class Category implements JsonSerializable{
     }
 
     /**
-     * gets the description
-     * @return string the description of the category
-     */
-    public function getDescription( ){
-        return $this->description;
-    }
-
-    /**
      * {@inheritdoc}
      * @see JsonSerializable::jsonSerialize()
      */
@@ -53,8 +42,7 @@ class Category implements JsonSerializable{
     {
         return [
             "id" => $this->getId(),
-            "name" => $this->getName(),
-            "description" => $this->getDescription()
+            "name" => $this->getName()
         ];
     }
 

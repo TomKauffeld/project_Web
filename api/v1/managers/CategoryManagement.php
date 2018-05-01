@@ -56,7 +56,8 @@ class CategoryManagement{
      */
     public static function changeName( array $token, string $id, string $name){
         $user = TokenManagement::checkTokenJson( $token);
-        if ($user != null){
+        if ($user != null && $user["status"] == "OK"){
+            $user = $user["user"];
             if ($user->getAdminLvL() >= 2){
                 $category = CategoryDatabase::changeName( $id, $name);
                 if ($category == null){
@@ -76,14 +77,13 @@ class CategoryManagement{
      * creates a new category
      * @param array $token the token of the user creating this category
      * @param string $name the name of the new category
-     * @param string $description the description of the new category
      * @return array the response
      */
-    public static function createNew( array $token, string $name, string $description){
+    public static function createNew( array $token, string $name){
         $user = TokenManagement::checkTokenJson( $token);
-        if ($user != null){
-            if ($user->getAdminLvL() >= 2){
-                $category = CategoryDatabase::createNew( $name, $description);
+        if ($user != null && $user["status"] == "OK"){
+            if ($user["user"]->getAdminLvL() >= 2){
+                $category = CategoryDatabase::createNew( $name);
                 if ($category == null){
                     return array( "status" => "ERROR", "error" => "NAME ALREADY TAKEN", "version" => "v1");
                 }else{

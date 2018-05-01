@@ -1,5 +1,6 @@
 <?php
 header('Content-Type: application/json');
+header( "Access-Control-Allow-Origin: *");
 require_once __DIR__."/../managers/PostManagement.php";
 
 $method = $_SERVER['REQUEST_METHOD'];
@@ -11,19 +12,29 @@ switch ($method){
         $i = array_search( "api", $url_arr);
         if (($i+3 == $lenght || $i+4 == $lenght) && !(isset( $url_arr[$i+3]) && strlen( $url_arr[$i+3]) > 0)){
             if (isset( $request["token"]) && isset( $request["title"]) && isset( $request["body"]) && isset( $request["categories"])){
-                if (((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443)){
-                    $response = PostManagement::createNew( $request["token"], $request["categories"], $request["title"], $request["body"]);
-                    if ($response["status"] == "ERROR"){
-                        if ($response["error"] == "INVALID TOKEN"){
-                            http_response_code( 401);
-                        }elseif( $response["error"] == "NOT PERMITTED"){
-                            http_response_code( 403);
+                if ((isset( $request["base64"]) && isset( $request["type"])) || !(isset( $request["base64"]) || isset( $request["type"]))){
+                    if (((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443)){
+                        $response ="";
+                        if (isset( $request["base64"]) && isset( $request["type"])){
+                            $response = PostManagement::createNew( $request["token"], $request["categories"], $request["title"], $request["body"], $request["type"], $request["base64"]);
+                        }else{
+                            $response = PostManagement::createNew( $request["token"], $request["categories"], $request["title"], $request["body"]);
                         }
+                        if ($response["status"] == "ERROR"){
+                            if ($response["error"] == "INVALID TOKEN"){
+                                http_response_code( 401);
+                            }elseif( $response["error"] == "NOT PERMITTED"){
+                                http_response_code( 403);
+                            }
+                        }
+                        echo json_encode( $response);
+                    }else{
+                        http_response_code( 505);
+                        echo json_encode( array( "status" => "ERROR", "error" => "NOT A SECURE CONNECTION", "version" => "v1"));
                     }
-                    echo json_encode( $response);
                 }else{
-                    http_response_code( 505);
-                    echo json_encode( array( "status" => "ERROR", "error" => "NOT A SECURE CONNECTION", "version" => "v1"));
+                    http_response_code( 400);
+                    echo json_encode( array( "status" => "ERROR", "error" => "PARAMS NOT SET", "version" => "v1"));
                 }
             }else{
                 http_response_code( 400);
