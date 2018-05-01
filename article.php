@@ -59,8 +59,25 @@
             </div>
             
         </div>
-
         
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <h2 class="col-xs-12">Votre commentaire</h2>
+        </div>
+
+        <div class="row">
+            <form class="form-horizontal col-md-8 col-md-offset-2">
+            <br/>
+                <div class="form-group">
+                    <textarea class="form-control" rows="3"></textarea>
+                </div>
+                
+                <button type="reset" class="btn btn-default">Annuler</button>
+                <button type="submit" class="btn btn-primary">Envoyer</button> 
+            </form>
+        <div>
     </div>
 </main>
 <?php include('footer.php'); ?>
