@@ -6,13 +6,14 @@ require_once __DIR__."/../managers/CommentManagement.php";
 $method = $_SERVER['REQUEST_METHOD'];
 switch ($method){
     case "POST":
+        $request = json_decode( file_get_contents( 'php://input'), true);
         $url_arr = explode( "/", $_SERVER["REQUEST_URI"]);
         $lenght = count( $url_arr);
         $i = array_search( "api", $url_arr);
         if (($i+3 == $lenght || $i+4 == $lenght) && !(isset( $url_arr[$i+3]) && strlen( $url_arr[$i+3]) > 0)){
-            if (isset( $_POST["token"]) && isset( $_POST["post"]) && isset( $_POST["body"])){
+            if (isset( $request["token"]) && isset( $request["post"]) && isset( $request["body"])){
                 if (((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443)){
-                    $response = CommentManagement::createNew( $_POST["token"], $_POST["post"], $_POST["body"]);
+                    $response = CommentManagement::createNew( $request["token"], $request["post"], $request["body"]);
                     if ($response["status"] == "ERROR"){
                         if ($response["error"] == "INVALID TOKEN"){
                             http_response_code( 401);
