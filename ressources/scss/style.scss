@@ -1,0 +1,139 @@
+@import 'font';
+@import 'variables';
+// Menu
+body {
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    background-color: $creme;
+    color: $white;
+    font-family: 'Raleway', sans-serif !important;
+    nav.navbar {
+        background-color: $blue;
+        margin-bottom: 0px;
+        border-bottom: 3px solid $darkblue;
+        a {
+            color: $darkblue;
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.2em;
+            &:hover {
+                color: $white;
+                background-color: $blue;
+            }
+            &.navbar-brand {
+                font-weight: 800;
+            }
+        }
+        .icon-bar {
+            background-color: $white;
+        }
+    }
+    .banner-home {
+        background-image: url('../images/banner.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        height: 400px;
+        margin-bottom: 50px;
+    }
+    .banner-article {
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        height: 400px;
+        margin-bottom: 50px;
+    }
+    main {
+        .container {
+            padding-top: 0px;
+            padding-bottom: 0px;
+            margin-bottom: 50px;
+            border-bottom: 5px solid $darkblue;
+            margin-bottom: 50px;
+            background-color: $blue;
+        }
+        h2 {
+            background-color: $darkblue;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 2em;
+        }
+        .home-article {
+            display: flex;
+            padding: 5px 0px;
+            >div {
+                width: 50%;
+            }
+            .image {
+                background-size: cover;
+                background-position: center center;
+            }
+            .resume {
+                padding: 30px 10px 30px 20px;
+            }
+            h3 a {
+                font-family: 'Raleway', sans-serif;
+                color: $darkblue;
+                font-size: 1.2em;
+                &:hover {
+                    text-decoration: none;
+                    color: $darkblue;
+                }
+            }
+            a {
+                color: $lightblue;
+                &:hover {
+                    color: $darkblue;
+                    text-decoration: none;
+                }
+            }
+            @media screen and (max-width: $break-small) {
+                display: block;
+                >div {
+                    width: 100%;
+                }
+                .image {
+                    height: 200px;
+                }
+            }
+        }
+        .content-article {
+            padding: 50px 100px;
+            @media screen and (max-width: $break-small) {
+                padding: 50px 10px;
+            }
+            a {
+                color: $lightblue;
+                &:hover {
+                    text-decoration: none;
+                    color: $darkblue;
+                }
+            }
+        }
+        .comments {
+            .comment {
+                border-bottom: 2px solid $darkblue;
+                h5 {
+                    font-family: 'Raleway', sans-serif;
+                    a {
+                        color: $lightblue;
+                        &:hover {
+                            text-decoration: none;
+                            color: $darkblue;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    footer {
+        background-color: $blue;
+        border-top: 3px solid $darkblue;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+}
