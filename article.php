@@ -41,23 +41,25 @@
         <div class="row">
             <h2 class="col-xs-12">Commentaires</h2>
         </div>
-
         <div class="row comments">
-            <div class="col-xs-12 comment">
-                <h5><a href="#">Julie Latieule</a> a écrit :</h5>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porta id mi ac finibus. Curabitur ut eros id ante lobortis iaculis. Suspendisse vulputate, urna ullamcorper euismod mollis, libero mauris commodo leo, in bibendum diam felis eget justo. Curabitur aliquet malesuada augue quis suscipit. Integer diam nisi, consequat vel tincidunt a, vehicula a odio. Donec sit amet nulla a nunc accumsan dignissim. Vivamus vitae tincidunt orci. Nullam fringilla lorem non urna fringilla, a mattis eros sollicitudin.</p>
-            </div>
+            <?php
+            $result = file_get_contents($url."post/".$id."/comments", false, $context);
+            $json = json_decode( $result, true);
+            $comments = $json["comments"];
+            foreach( $comments as $cid){
+                $result = file_get_contents($url."comment/".$cid, false, $context);
+                $json = json_decode( $result, true);
+                $comment = $json["comment"];
+                $result = file_get_contents( $url."user/".$comment["author"], false, $context);
+                $json = json_decode( $result, true);
+                $user = $json["user"];
+                echo '<div class="col-xs-12 comment">';
+                echo '<h5>Le '.htmlspecialchars( date( "d/m/y", $post["time"])).', <a href="profil.php?u='.htmlspecialchars($user["id"]).'">'.htmlspecialchars($user["username"]).'</a> a écrit :</h5>';
+                echo '<p>'.htmlspecialchars( $comment["body"]).'</p></div>';
+            }
 
-            <div class="col-xs-12 comment">
-                <h5><a href="#">Admin</a> a écrit :</h5>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porta id mi ac finibus. Curabitur ut eros id ante lobortis iaculis. Suspendisse vulputate, urna ullamcorper euismod mollis, libero mauris commodo leo, in bibendum diam felis eget justo. Curabitur aliquet malesuada augue quis suscipit. Integer diam nisi, consequat vel tincidunt a, vehicula a odio. Donec sit amet nulla a nunc accumsan dignissim. Vivamus vitae tincidunt orci. Nullam fringilla lorem non urna fringilla, a mattis eros sollicitudin.</p>
-            </div>
 
-            <div class="col-xs-12 comment">
-                <h5><a href="#">Un utilisateur</a> a écrit :</h5>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porta id mi ac finibus. Curabitur ut eros id ante lobortis iaculis. Suspendisse vulputate, urna ullamcorper euismod mollis, libero mauris commodo leo, in bibendum diam felis eget justo. Curabitur aliquet malesuada augue quis suscipit. Integer diam nisi, consequat vel tincidunt a, vehicula a odio. Donec sit amet nulla a nunc accumsan dignissim. Vivamus vitae tincidunt orci. Nullam fringilla lorem non urna fringilla, a mattis eros sollicitudin.</p>
-            </div>
-            
+            ?>
         </div>
         
     </div>
@@ -69,15 +71,36 @@
 
         <div class="row">
             <form class="form-horizontal col-md-8 col-md-offset-2">
+            <input id="id" type="hidden" value="<?php echo htmlspecialchars( $id);?>">
             <br/>
                 <div class="form-group">
-                    <textarea class="form-control" rows="3"></textarea>
+                    <textarea id="comment_body" class="form-control" rows="3"></textarea>
                 </div>
                 
                 <button type="reset" class="btn btn-default">Annuler</button>
-                <button type="submit" class="btn btn-primary">Envoyer</button> 
+                <button id="send_comment" type="button" class="btn btn-primary">Envoyer</button> 
             </form>
         <div>
     </div>
 </main>
+<script type="text/javascript">
+    $(document).ready( function(){
+        $("#send_comment").click( function(){
+            var sendData = {
+                "post": $("#id").val(),
+                "body": $("#comment_body").val(),
+                "token": JSON.parse(getToken())
+            }
+            var sendString = JSON.stringify( sendData);
+            send( "https://pubflare.ovh/school/blog/api/latest/comment", "POST", sendString, function( json){
+                if (json.status == "OK"){
+                    location.reload();
+                }else{
+                    alert( json.error);
+                }
+            });
+        })
+    });
+
+</script>
 <?php include('footer.php'); ?>
